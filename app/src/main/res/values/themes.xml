@@ -17,8 +17,8 @@
         <item name="android:homeAsUpIndicator">@drawable/ic_baseline_arrow_back_ios_24</item>
 
         <!-- Font -->
-        <item name="android:buttonStyle">@font/merriweather_light</item>
-        <item name="android:fontFamily">@font/merriweather_light</item>
-        <item name="fontFamily">@font/merriweather_light</item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
+        <item name="android:buttonStyle">@font/lato</item>
+        <item name="android:fontFamily">@font/lato</item>
+        <item name="fontFamily">@font/lato</item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
     </style>
 </resources>
