@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Jetpack MVVM</string>
+    <string name="app_title">Jetpack MovieDB</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="movies">Movies</string>
+    <string name="tv_show">Tv Show</string>
 </resources>
