@@ -7,7 +7,7 @@ import rivaldy.dicoding.jetpack.mvvm.R
  * Find me on my Github -> https://github.com/im-o
  **/
 
-object DataDummy {
+object MovieDummy {
     fun getDummyMovie(): MutableList<MovieData> {
         val movies = mutableListOf<MovieData>()
         movies.add(
