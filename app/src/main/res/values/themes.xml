@@ -21,4 +21,9 @@
         <item name="android:fontFamily">@font/lato</item>
         <item name="fontFamily">@font/lato</item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
     </style>
+
+    <style name="ToolbarNoPadding" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="contentInsetStart">0dp</item>
+        <item name="android:contentInsetStart">0dp</item>
+    </style>
 </resources>

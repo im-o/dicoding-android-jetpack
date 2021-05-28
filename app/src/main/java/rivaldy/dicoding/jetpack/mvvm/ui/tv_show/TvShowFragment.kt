@@ -19,7 +19,7 @@ class TvShowFragment : Fragment() {
         TvShowAdapter { item -> setDataMovie(item) }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentTvShowBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -37,6 +37,8 @@ class TvShowFragment : Fragment() {
     }
 
     private fun setDataMovie(item: MovieData) {
-        context?.openActivity(DetailMovieActivity::class.java)
+        context?.openActivity(DetailMovieActivity::class.java){
+            putString(DetailMovieActivity.EXTRA_ID_MOVIE, item.movieId)
+        }
     }
 }

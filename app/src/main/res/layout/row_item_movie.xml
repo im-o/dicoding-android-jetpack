@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/space_8"
     android:backgroundTint="@color/colorPrimaryLow"
+    app:cardCornerRadius="@dimen/space_8"
     app:cardElevation="@dimen/space_3"
     app:cardUseCompatPadding="true">
 
@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/space_3"
             android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/colorPrimaryDark"
             app:cardCornerRadius="@dimen/space_8"
             app:cardElevation="@dimen/space_0"
             app:cardUseCompatPadding="false"
@@ -44,7 +45,7 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/poster_arrow" />
+                    tools:src="@drawable/ic_thumbnails" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
