@@ -5,11 +5,38 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import rivaldy.dicoding.jetpack.mvvm.R
+import androidx.lifecycle.ViewModelProvider
+import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieData
+import rivaldy.dicoding.jetpack.mvvm.databinding.FragmentTvShowBinding
+import rivaldy.dicoding.jetpack.mvvm.ui.detail.DetailMovieActivity
+import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.openActivity
 
 class TvShowFragment : Fragment() {
 
+    private lateinit var binding: FragmentTvShowBinding
+
+    private val tvShowAdapter: TvShowAdapter by lazy {
+        TvShowAdapter { item -> setDataMovie(item) }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_tv_show, container, false)
+        binding = FragmentTvShowBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        activity ?: return
+        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[TvShowViewModel::class.java]
+        val tvShows = viewModel.getTvShows()
+        tvShowAdapter.setTvShows(tvShows)
+        with(binding.movieListRV) {
+            setHasFixedSize(true)
+            adapter = tvShowAdapter
+        }
+    }
+
+    private fun setDataMovie(item: MovieData) {
+        context?.openActivity(DetailMovieActivity::class.java)
     }
 }

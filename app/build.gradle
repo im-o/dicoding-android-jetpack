@@ -59,4 +59,11 @@ dependencies {
     androidTestImplementation "androidx.test:rules:$androidTestVersion"
     androidTestImplementation "androidx.test.ext:junit:$junitExtversion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+
+    //picasso
+    implementation "com.squareup.picasso:picasso:$picassoVersion"
+    implementation "com.jakewharton.picasso:picasso2-okhttp3-downloader:$picassoOkHttpVersion"
+
+    //fresco
+    implementation "com.facebook.fresco:fresco:$frescoVersion"
 }

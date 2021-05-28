@@ -6,4 +6,6 @@
     <string name="movies">Movies</string>
     <string name="tv_show">Tv Show</string>
     <string name="todo">TODO</string>
+    <string name="now_streaming">Now Streaming…</string>
+    <string name="overview">Overview</string>
 </resources>

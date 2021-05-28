@@ -1,4 +1,4 @@
-package rivaldy.dicoding.jetpack.mvvm.ui.movie
+package rivaldy.dicoding.jetpack.mvvm.ui.tv_show
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -17,28 +17,28 @@ import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.isVisible
  * Find me on my Github -> https://github.com/im-o
  **/
 
-class MovieAdapter(private val listener: (MovieData) -> Unit) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class TvShowAdapter(private val listener: (MovieData) -> Unit) : RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
     private var listCourses = ArrayList<MovieData>()
 
-    fun setMovies(movies: List<MovieData>?) {
-        if (movies == null) return
+    fun setTvShows(tvShows: List<MovieData>?) {
+        if (tvShows == null) return
         this.listCourses.clear()
-        this.listCourses.addAll(movies)
+        this.listCourses.addAll(tvShows)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TvShowViewHolder {
         val rowItemMovieBinding = RowItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MovieViewHolder(rowItemMovieBinding)
+        return TvShowViewHolder(rowItemMovieBinding)
     }
 
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TvShowViewHolder, position: Int) {
         val movie = listCourses[position]
         holder.bindItem(movie, listener)
     }
 
     override fun getItemCount(): Int = listCourses.size
 
-    class MovieViewHolder(private val binding: RowItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
+    class TvShowViewHolder(private val binding: RowItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bindItem(item: MovieData, listener: (MovieData) -> Unit) {
             with(binding) {
                 movieTitleTV.text = item.title

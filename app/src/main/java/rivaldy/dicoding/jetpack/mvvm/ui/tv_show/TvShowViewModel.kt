@@ -10,5 +10,5 @@ import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieData
  **/
 
 class TvShowViewModel : ViewModel() {
-    fun getMovies(): MutableList<MovieData> = MovieDummy.getDummyTvShow()
+    fun getTvShows(): MutableList<MovieData> = MovieDummy.getDummyTvShow()
 }

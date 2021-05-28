@@ -12,7 +12,8 @@ object MovieDummy {
         val movies = mutableListOf<MovieData>()
         movies.add(
             MovieData(
-                "100", "Alita: Battle Angel",
+                "100",
+                "Alita: Battle Angel",
                 R.drawable.poster_alita,
                 "7.2",
                 "14/02/2019",

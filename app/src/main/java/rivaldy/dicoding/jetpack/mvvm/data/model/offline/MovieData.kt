@@ -6,7 +6,7 @@ package rivaldy.dicoding.jetpack.mvvm.data.model.offline
  **/
 
 data class MovieData(
-    var moviesId: String,
+    var movieId: String,
     var title: String,
     var imgPath: Int,
     var rate: String,
