@@ -3,14 +3,12 @@ package rivaldy.dicoding.jetpack.mvvm.ui.movie
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import rivaldy.dicoding.jetpack.mvvm.R
 import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieData
 import rivaldy.dicoding.jetpack.mvvm.databinding.RowItemMovieBinding
-import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.isVisible
 
 /**
  * Created by rivaldy on 28/05/21
@@ -48,19 +46,11 @@ class MovieAdapter(private val listener: (MovieData) -> Unit) : RecyclerView.Ada
                 val picasso = Picasso.get()
                 picasso.setIndicatorsEnabled(true)
                 picasso.load(item.imgPath)
-                    .placeholder(R.drawable.ic_thumbnails)
+                    .placeholder(R.drawable.ic_loading)
                     .error(R.drawable.ic_error)
                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
-                    .into(movieImageIV, object : Callback {
-                        override fun onSuccess() {
-                            loadingPB.isVisible(false)
-                        }
-
-                        override fun onError(e: Exception?) {
-                            loadingPB.isVisible(false)
-                        }
-                    })
+                    .into(movieImageIV)
                 root.setOnClickListener { listener(item) }
             }
         }

@@ -82,16 +82,6 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.0"
                         tools:src="@drawable/ic_thumbnails" />
-
-                    <ProgressBar
-                        android:id="@+id/loadingPB"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:elevation="4dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/movieImageIV" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -113,7 +103,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/imageCV"
                 app:layout_constraintStart_toStartOf="@id/imageCV"
                 app:layout_constraintTop_toBottomOf="@id/imageCV"
-                tools:text="1.8" />
+                android:text="@string/sample_0" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/dataMovieCL"

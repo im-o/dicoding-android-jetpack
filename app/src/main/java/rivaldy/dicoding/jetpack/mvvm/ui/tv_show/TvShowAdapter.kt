@@ -48,19 +48,11 @@ class TvShowAdapter(private val listener: (MovieData) -> Unit) : RecyclerView.Ad
                 val picasso = Picasso.get()
                 picasso.setIndicatorsEnabled(true)
                 picasso.load(item.imgPath)
-                    .placeholder(R.drawable.ic_thumbnails)
+                    .placeholder(R.drawable.ic_loading)
                     .error(R.drawable.ic_error)
                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
-                    .into(movieImageIV, object : Callback {
-                        override fun onSuccess() {
-                            loadingPB.isVisible(false)
-                        }
-
-                        override fun onError(e: Exception?) {
-                            loadingPB.isVisible(false)
-                        }
-                    })
+                    .into(movieImageIV)
                 root.setOnClickListener { listener(item) }
             }
         }

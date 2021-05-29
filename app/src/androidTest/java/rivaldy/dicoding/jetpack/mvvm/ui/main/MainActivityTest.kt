@@ -38,6 +38,8 @@ class MainActivityTest {
         onView(withId(R.id.titleTV)).check(matches(withText(movies[SAMPLE_POSITION].title)))
         onView(withId(R.id.descriptionTV)).check(matches(isDisplayed()))
         onView(withId(R.id.descriptionTV)).check(matches(withText(movies[SAMPLE_POSITION].desc)))
+        onView(withId(R.id.movieRateTV)).check(matches(isDisplayed()))
+        onView(withId(R.id.movieRateTV)).check(matches(withText(movies[SAMPLE_POSITION].rate)))
     }
 
     @Test
@@ -56,5 +58,7 @@ class MainActivityTest {
         onView(withId(R.id.titleTV)).check(matches(withText(tvShows[SAMPLE_POSITION].title)))
         onView(withId(R.id.descriptionTV)).check(matches(isDisplayed()))
         onView(withId(R.id.descriptionTV)).check(matches(withText(tvShows[SAMPLE_POSITION].desc)))
+        onView(withId(R.id.movieRateTV)).check(matches(isDisplayed()))
+        onView(withId(R.id.movieRateTV)).check(matches(withText(tvShows[SAMPLE_POSITION].rate)))
     }
 }

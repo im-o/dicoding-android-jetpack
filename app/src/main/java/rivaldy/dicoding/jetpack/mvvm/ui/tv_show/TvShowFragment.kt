@@ -9,12 +9,13 @@ import androidx.lifecycle.ViewModelProvider
 import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieData
 import rivaldy.dicoding.jetpack.mvvm.databinding.FragmentTvShowBinding
 import rivaldy.dicoding.jetpack.mvvm.ui.detail.DetailMovieActivity
+import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.isVisible
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.openActivity
 
 class TvShowFragment : Fragment() {
 
     companion object {
-        val TAG = TvShowFragment::class.java.simpleName
+        val TAG = TvShowFragment::class.java.simpleName ?: ""
     }
 
     private lateinit var binding: FragmentTvShowBinding
@@ -31,8 +32,13 @@ class TvShowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity ?: return
+        initData()
+    }
+
+    private fun initData() {
         val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[TvShowViewModel::class.java]
         val tvShows = viewModel.getTvShows()
+        binding.noDataTV.isVisible(tvShows.size <= 0)
         tvShowAdapter.setTvShows(tvShows)
         with(binding.tvListRV) {
             setHasFixedSize(true)
