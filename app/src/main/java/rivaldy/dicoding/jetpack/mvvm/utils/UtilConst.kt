@@ -7,6 +7,6 @@ package rivaldy.dicoding.jetpack.mvvm.utils
 
 object UtilConst {
     const val SIZE_EXPECTED_10 = 10
-    const val SAMPLE_ID_MOVIE = "100"
+    const val STR_TV_SHOW = "Tv Show"
     const val SAMPLE_POSITION = 0
 }

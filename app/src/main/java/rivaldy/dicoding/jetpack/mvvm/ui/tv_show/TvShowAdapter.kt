@@ -3,14 +3,12 @@ package rivaldy.dicoding.jetpack.mvvm.ui.tv_show
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import rivaldy.dicoding.jetpack.mvvm.R
 import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieData
 import rivaldy.dicoding.jetpack.mvvm.databinding.RowItemMovieBinding
-import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.isVisible
 
 /**
  * Created by rivaldy on 28/05/21

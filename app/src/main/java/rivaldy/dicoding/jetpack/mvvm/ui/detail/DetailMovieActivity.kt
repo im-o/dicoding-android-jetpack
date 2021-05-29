@@ -3,7 +3,6 @@ package rivaldy.dicoding.jetpack.mvvm.ui.detail
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
@@ -11,7 +10,6 @@ import rivaldy.dicoding.jetpack.mvvm.R
 import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieData
 import rivaldy.dicoding.jetpack.mvvm.databinding.ActivityDetailMovieBinding
 import rivaldy.dicoding.jetpack.mvvm.ui.movie.MovieFragment
-import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.isVisible
 
 class DetailMovieActivity : AppCompatActivity() {
     companion object {

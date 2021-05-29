@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
         val titles = arrayListOf(getString(R.string.movies), getString(R.string.tv_show))
         val fragments = arrayListOf(MovieFragment(), TvShowFragment())
-        val viewPagerAdapter = ViewPagerAdapter(this, titles, fragments, supportFragmentManager)
+        val viewPagerAdapter = ViewPagerAdapter(titles, fragments, supportFragmentManager)
 
         binding.viewPager.adapter = viewPagerAdapter
         binding.tabLayout.setupWithViewPager(binding.viewPager)

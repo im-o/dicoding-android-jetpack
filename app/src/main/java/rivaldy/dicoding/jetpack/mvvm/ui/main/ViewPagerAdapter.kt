@@ -1,6 +1,5 @@
 package rivaldy.dicoding.jetpack.mvvm.ui.main
 
-import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -11,7 +10,6 @@ import androidx.fragment.app.FragmentPagerAdapter
  **/
 
 class ViewPagerAdapter(
-    private val context: Context,
     private val listStr: ArrayList<String>,
     private val listFrag: ArrayList<Fragment>,
     fm: FragmentManager

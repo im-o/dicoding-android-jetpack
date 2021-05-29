@@ -2,11 +2,9 @@
     <string name="app_name">Jetpack MVVM</string>
     <string name="app_title">Jetpack MovieDB</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="movies">Movies</string>
     <string name="tv_show">Tv Show</string>
     <string name="todo">TODO</string>
-    <string name="now_streaming">Now Streaming…</string>
     <string name="overview">Overview</string>
     <string name="powered_by">github.com/im-o • bdd2021 • dicoding</string>
     <string name="no_detail">No detail movie</string>

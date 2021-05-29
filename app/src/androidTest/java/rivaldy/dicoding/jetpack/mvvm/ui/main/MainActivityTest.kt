@@ -12,6 +12,7 @@ import org.junit.Test
 import rivaldy.dicoding.jetpack.mvvm.R
 import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieDummy
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilConst.SAMPLE_POSITION
+import rivaldy.dicoding.jetpack.mvvm.utils.UtilConst.STR_TV_SHOW
 
 /**
  * Created by rivaldy on 29/05/21
@@ -44,14 +45,14 @@ class MainActivityTest {
 
     @Test
     fun loadTvShows() {
-        onView(withText("Tv Show")).perform(click())
+        onView(withText(STR_TV_SHOW)).perform(click())
         onView(withId(R.id.tvListRV)).check(matches(isDisplayed()))
         onView(withId(R.id.tvListRV)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(movies.size))
     }
 
     @Test
     fun loadDetailTvShow() {
-        onView(withText("Tv Show")).perform(click())
+        onView(withText(STR_TV_SHOW)).perform(click())
         onView(withId(R.id.tvListRV)).check(matches(isDisplayed()))
         onView(withId(R.id.tvListRV)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(SAMPLE_POSITION, click()))
         onView(withId(R.id.titleTV)).check(matches(isDisplayed()))

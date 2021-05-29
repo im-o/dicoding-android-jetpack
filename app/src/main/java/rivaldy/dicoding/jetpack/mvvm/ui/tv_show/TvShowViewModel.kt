@@ -1,8 +1,8 @@
 package rivaldy.dicoding.jetpack.mvvm.ui.tv_show
 
 import androidx.lifecycle.ViewModel
-import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieDummy
 import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieData
+import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieDummy
 
 /**
  * Created by rivaldy on 28/05/21

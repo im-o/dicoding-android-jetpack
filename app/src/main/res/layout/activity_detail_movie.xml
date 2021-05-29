@@ -96,14 +96,14 @@
                 android:paddingTop="@dimen/space_16"
                 android:paddingEnd="@dimen/space_14"
                 android:paddingBottom="@dimen/space_16"
+                android:text="@string/sample_0"
                 android:textColor="@color/white"
                 android:textSize="@dimen/size_16"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/imageCV"
                 app:layout_constraintEnd_toEndOf="@+id/imageCV"
                 app:layout_constraintStart_toStartOf="@id/imageCV"
-                app:layout_constraintTop_toBottomOf="@id/imageCV"
-                android:text="@string/sample_0" />
+                app:layout_constraintTop_toBottomOf="@id/imageCV" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/dataMovieCL"

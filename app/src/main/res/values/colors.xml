@@ -15,20 +15,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="whiteLow">#D3FFFFFF</color>
-    <color name="placeholder">#6FB6B6B6</color>
 
     <!--Text Colors-->
-    <color name="colorTextGrey">#6A6A6A</color>
-    <color name="colorBlackGrey">#6A6A6A</color>
     <color name="colorTextGreyLow">#737578</color>
     <color name="colorTextGreyVeryLow">#A3A6AA</color>
-    <color name="colorBackground">#0DBDBDBD</color>
-    <color name="colorBackgroundTransparent">#22393838</color>
-    <color name="colorBackgroundTransparentHigh">#45393838</color>
-    <color name="colorBackgroundTransparentVHigh">#A1393838</color>
-    <color name="colorBackgroundTransparentVVHigh">#DC393838</color>
     <color name="colorDivider">#F5F2F2</color>
-    <color name="colorDividerHigh">#ECECEC</color>
-    <color name="colorTextWhitePrimary">#F9DCDC</color>
-    <color name="colorDisable">#dddddd</color>
 </resources>
