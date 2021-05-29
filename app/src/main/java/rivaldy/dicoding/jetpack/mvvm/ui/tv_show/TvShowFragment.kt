@@ -13,6 +13,10 @@ import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.openActivity
 
 class TvShowFragment : Fragment() {
 
+    companion object {
+        val TAG = TvShowFragment::class.java.simpleName
+    }
+
     private lateinit var binding: FragmentTvShowBinding
 
     private val tvShowAdapter: TvShowAdapter by lazy {
@@ -30,15 +34,16 @@ class TvShowFragment : Fragment() {
         val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[TvShowViewModel::class.java]
         val tvShows = viewModel.getTvShows()
         tvShowAdapter.setTvShows(tvShows)
-        with(binding.movieListRV) {
+        with(binding.tvListRV) {
             setHasFixedSize(true)
             adapter = tvShowAdapter
         }
     }
 
     private fun setDataMovie(item: MovieData) {
-        context?.openActivity(DetailMovieActivity::class.java){
+        context?.openActivity(DetailMovieActivity::class.java) {
             putString(DetailMovieActivity.EXTRA_ID_MOVIE, item.movieId)
+            putString(DetailMovieActivity.EXTRA_TAG, TAG)
         }
     }
 }

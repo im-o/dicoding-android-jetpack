@@ -51,7 +51,7 @@
                 style="@style/Widget.MaterialComponents.CardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:backgroundTint="@color/colorPrimaryDark"
                 app:cardCornerRadius="@dimen/space_6"
                 app:cardElevation="@dimen/space_8"
@@ -76,12 +76,12 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="@string/todo"
                         android:scaleType="centerCrop"
-                        tools:src="@drawable/ic_thumbnails"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0" />
+                        app:layout_constraintVertical_bias="0.0"
+                        tools:src="@drawable/ic_thumbnails" />
 
                     <ProgressBar
                         android:id="@+id/loadingPB"
@@ -120,14 +120,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="24dp"
                 android:background="@drawable/bg_primary_corner_top_outline_r8"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/movieRateTV">
+                app:layout_constraintTop_toBottomOf="@+id/movieRateTV"
+                app:layout_constraintVertical_bias="0.0">
 
                 <TextView
                     android:id="@+id/movieTitleTV"

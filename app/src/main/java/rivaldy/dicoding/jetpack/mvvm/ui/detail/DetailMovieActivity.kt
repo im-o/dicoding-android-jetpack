@@ -10,17 +10,23 @@ import com.squareup.picasso.Picasso
 import rivaldy.dicoding.jetpack.mvvm.R
 import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieData
 import rivaldy.dicoding.jetpack.mvvm.databinding.ActivityDetailMovieBinding
+import rivaldy.dicoding.jetpack.mvvm.ui.movie.MovieFragment
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.isVisible
 
 class DetailMovieActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_ID_MOVIE = "EXTRA_ID_MOVIE"
+        const val EXTRA_TAG = "EXTRA_TAG"
     }
 
     private lateinit var binding: ActivityDetailMovieBinding
 
     private val extraIdMovie: String? by lazy {
         intent.getStringExtra(EXTRA_ID_MOVIE)
+    }
+
+    private val extraTAG: String? by lazy {
+        intent.getStringExtra(EXTRA_TAG)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,17 +52,20 @@ class DetailMovieActivity : AppCompatActivity() {
         val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailMovieViewModel::class.java]
         if (extraIdMovie != null) {
             viewModel.setSelectedMovie(extraIdMovie ?: "")
-            viewModel.getDetailMovie()
-            initView(viewModel.getDetailMovie())
+            if (extraTAG != null) {
+                val movieData = if (extraTAG.equals(MovieFragment.TAG)) viewModel.getDetailMovie() else viewModel.getDetailTvShow()
+                initView(movieData)
+            }
         }
     }
 
-    private fun initView(movie: MovieData) {
+    private fun initView(movie: MovieData?) {
         binding.apply {
-            val strInfo = "${movie.date} • ${movie.country} • ${movie.genre} • ${movie.duration}"
+            val strInfo = "${movie?.date} • ${movie?.country} • ${movie?.genre} • ${movie?.duration}"
+            val strUrl = movie?.imgPath ?: 0
             val picasso = Picasso.get()
             picasso.setIndicatorsEnabled(true)
-            picasso.load(movie.imgPath)
+            picasso.load(strUrl)
                 .placeholder(R.drawable.ic_thumbnails)
                 .error(R.drawable.ic_error)
                 .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
@@ -71,11 +80,11 @@ class DetailMovieActivity : AppCompatActivity() {
                     }
                 })
 
-            movieTitleTV.text = movie.title
-            titleTV.text = movie.title
+            movieTitleTV.text = movie?.title ?: getString(R.string.no_detail)
+            titleTV.text = movie?.title ?: getString(R.string.no_detail)
             infoGenreTV.text = strInfo
-            movieRateTV.text = movie.rate
-            descriptionTV.text = movie.desc
+            movieRateTV.text = movie?.rate ?: getString(R.string.rate_0)
+            descriptionTV.text = movie?.desc ?: getString(R.string.no_detail)
         }
     }
 }

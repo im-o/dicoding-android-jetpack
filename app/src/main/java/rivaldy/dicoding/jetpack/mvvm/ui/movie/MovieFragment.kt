@@ -9,9 +9,14 @@ import androidx.lifecycle.ViewModelProvider
 import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieData
 import rivaldy.dicoding.jetpack.mvvm.databinding.FragmentMovieBinding
 import rivaldy.dicoding.jetpack.mvvm.ui.detail.DetailMovieActivity
+import rivaldy.dicoding.jetpack.mvvm.ui.tv_show.TvShowFragment
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.openActivity
 
 class MovieFragment : Fragment() {
+
+    companion object {
+        val TAG = MovieFragment::class.java.simpleName
+    }
 
     private lateinit var binding: FragmentMovieBinding
 
@@ -39,6 +44,7 @@ class MovieFragment : Fragment() {
     private fun setDataMovie(item: MovieData) {
         context?.openActivity(DetailMovieActivity::class.java){
             putString(DetailMovieActivity.EXTRA_ID_MOVIE, item.movieId)
+            putString(DetailMovieActivity.EXTRA_TAG, TAG)
         }
     }
 }

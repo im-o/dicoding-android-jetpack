@@ -9,7 +9,7 @@ import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieDummy
  * Find me on my Github -> https://github.com/im-o
  **/
 
-class DetailMovieViewModel: ViewModel() {
+class DetailMovieViewModel : ViewModel() {
     private lateinit var movieId: String
 
     fun setSelectedMovie(movieId: String) {
@@ -25,5 +25,16 @@ class DetailMovieViewModel: ViewModel() {
             }
         }
         return movie
+    }
+
+    fun getDetailTvShow(): MovieData {
+        lateinit var tvShow: MovieData
+        val tvShowData = MovieDummy.getDummyTvShow()
+        for (tvShowItem in tvShowData) {
+            if (tvShowItem.movieId == movieId) {
+                tvShow = tvShowItem
+            }
+        }
+        return tvShow
     }
 }
