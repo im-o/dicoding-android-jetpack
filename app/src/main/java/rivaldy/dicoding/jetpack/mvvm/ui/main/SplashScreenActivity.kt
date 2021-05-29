@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import rivaldy.dicoding.jetpack.mvvm.R
+import rivaldy.dicoding.jetpack.mvvm.utils.UtilConst.DELAY_2000
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.openActivity
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -13,6 +14,6 @@ class SplashScreenActivity : AppCompatActivity() {
         Handler(mainLooper).postDelayed({
             openActivity(MainActivity::class.java)
             finish()
-        }, 2000)
+        }, DELAY_2000)
     }
 }

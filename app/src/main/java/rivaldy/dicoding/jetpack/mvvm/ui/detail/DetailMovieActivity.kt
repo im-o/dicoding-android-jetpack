@@ -59,7 +59,7 @@ class DetailMovieActivity : AppCompatActivity() {
 
     private fun initView(movie: MovieData?) {
         binding.apply {
-            val strInfo = "${movie?.date} • ${movie?.country} • ${movie?.genre} • ${movie?.duration}"
+            val strInfo = getString(R.string.str_info, movie?.date, movie?.country, movie?.genre, movie?.duration)
             val strUrl = movie?.imgPath ?: 0
             val picasso = Picasso.get()
             picasso.setIndicatorsEnabled(true)

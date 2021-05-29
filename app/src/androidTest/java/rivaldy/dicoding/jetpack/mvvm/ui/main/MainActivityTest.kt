@@ -34,32 +34,40 @@ class MainActivityTest {
 
     @Test
     fun loadDetailMovie() {
+        val movie = movies[SAMPLE_POSITION]
+        val strInfo = "${movie.date} • ${movie.country} • ${movie.genre} • ${movie.duration}"
         onView(withId(R.id.movieListRV)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(SAMPLE_POSITION, click()))
         onView(withId(R.id.titleTV)).check(matches(isDisplayed()))
-        onView(withId(R.id.titleTV)).check(matches(withText(movies[SAMPLE_POSITION].title)))
+        onView(withId(R.id.titleTV)).check(matches(withText(movie.title)))
         onView(withId(R.id.descriptionTV)).check(matches(isDisplayed()))
-        onView(withId(R.id.descriptionTV)).check(matches(withText(movies[SAMPLE_POSITION].desc)))
+        onView(withId(R.id.descriptionTV)).check(matches(withText(movie.desc)))
         onView(withId(R.id.movieRateTV)).check(matches(isDisplayed()))
-        onView(withId(R.id.movieRateTV)).check(matches(withText(movies[SAMPLE_POSITION].rate)))
+        onView(withId(R.id.movieRateTV)).check(matches(withText(movie.rate)))
+        onView(withId(R.id.infoGenreTV)).check(matches(isDisplayed()))
+        onView(withId(R.id.infoGenreTV)).check(matches(withText(strInfo)))
     }
 
     @Test
     fun loadTvShows() {
         onView(withText(STR_TV_SHOW)).perform(click())
         onView(withId(R.id.tvListRV)).check(matches(isDisplayed()))
-        onView(withId(R.id.tvListRV)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(movies.size))
+        onView(withId(R.id.tvListRV)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(tvShows.size))
     }
 
     @Test
     fun loadDetailTvShow() {
+        val tvShow = tvShows[SAMPLE_POSITION]
+        val strInfo = "${tvShow.date} • ${tvShow.country} • ${tvShow.genre} • ${tvShow.duration}"
         onView(withText(STR_TV_SHOW)).perform(click())
         onView(withId(R.id.tvListRV)).check(matches(isDisplayed()))
         onView(withId(R.id.tvListRV)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(SAMPLE_POSITION, click()))
         onView(withId(R.id.titleTV)).check(matches(isDisplayed()))
-        onView(withId(R.id.titleTV)).check(matches(withText(tvShows[SAMPLE_POSITION].title)))
+        onView(withId(R.id.titleTV)).check(matches(withText(tvShow.title)))
         onView(withId(R.id.descriptionTV)).check(matches(isDisplayed()))
-        onView(withId(R.id.descriptionTV)).check(matches(withText(tvShows[SAMPLE_POSITION].desc)))
+        onView(withId(R.id.descriptionTV)).check(matches(withText(tvShow.desc)))
         onView(withId(R.id.movieRateTV)).check(matches(isDisplayed()))
-        onView(withId(R.id.movieRateTV)).check(matches(withText(tvShows[SAMPLE_POSITION].rate)))
+        onView(withId(R.id.movieRateTV)).check(matches(withText(tvShow.rate)))
+        onView(withId(R.id.infoGenreTV)).check(matches(isDisplayed()))
+        onView(withId(R.id.infoGenreTV)).check(matches(withText(strInfo)))
     }
 }
