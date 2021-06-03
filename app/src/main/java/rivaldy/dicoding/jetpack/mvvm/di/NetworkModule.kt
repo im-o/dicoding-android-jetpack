@@ -11,6 +11,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import rivaldy.dicoding.jetpack.mvvm.BuildConfig
 import rivaldy.dicoding.jetpack.mvvm.data.remote.ApiService
+import rivaldy.dicoding.jetpack.mvvm.utils.UtilConst
 
 /**
  * Created by rivaldy on 03/06/21
@@ -35,7 +36,19 @@ object NetworkModule {
 
     @Provides
     fun providesOkHttpClient(logging: HttpLoggingInterceptor): OkHttpClient {
-        return OkHttpClient.Builder().addInterceptor(logging).build()
+        return OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                val url = chain
+                    .request()
+                    .url
+                    .newBuilder()
+                    .addQueryParameter("api_key", UtilConst.API_KEY)
+                    .addQueryParameter("language", UtilConst.DEFAULT_LANG)
+                    .build()
+                chain.proceed(chain.request().newBuilder().url(url).build())
+            }
+            .addInterceptor(logging)
+            .build()
     }
 
     @Provides

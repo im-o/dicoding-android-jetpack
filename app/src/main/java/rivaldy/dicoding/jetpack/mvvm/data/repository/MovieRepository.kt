@@ -1,6 +1,5 @@
-package rivaldy.dicoding.jetpack.mvvm.data.remote
+package rivaldy.dicoding.jetpack.mvvm.data.repository
 
-import retrofit2.http.GET
 import rivaldy.dicoding.jetpack.mvvm.data.model.api.movie.MovieResponse
 import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.TvShowResponse
 
@@ -9,10 +8,6 @@ import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.TvShowResponse
  * Find me on my Github -> https://github.com/im-o
  **/
 
-interface ApiService {
-    @GET("discover/movie")
-    suspend fun getMovies(): MovieResponse
-
-    @GET("discover/tv")
-    suspend fun getTvShows(): TvShowResponse
+interface MovieRepository {
+    suspend fun getMovies(): MovieResponse?
 }

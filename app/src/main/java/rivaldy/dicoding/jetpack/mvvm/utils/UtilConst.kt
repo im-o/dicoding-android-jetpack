@@ -10,4 +10,7 @@ object UtilConst {
     const val STR_TV_SHOW = "Tv Show"
     const val SAMPLE_POSITION = 0
     const val DELAY_2000 = 2000.toLong()
+
+    const val API_KEY = "8b904530a7aced766995fa063ed27355"
+    const val DEFAULT_LANG = "DEFAULT_LANG"
 }
