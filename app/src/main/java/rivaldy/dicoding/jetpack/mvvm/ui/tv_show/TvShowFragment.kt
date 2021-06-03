@@ -1,17 +1,22 @@
 package rivaldy.dicoding.jetpack.mvvm.ui.tv_show
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieData
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import dagger.hilt.android.AndroidEntryPoint
+import rivaldy.dicoding.jetpack.mvvm.data.ResultData
+import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.ResultTv
 import rivaldy.dicoding.jetpack.mvvm.databinding.FragmentTvShowBinding
 import rivaldy.dicoding.jetpack.mvvm.ui.detail.DetailMovieActivity
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.isVisible
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.openActivity
 
+@AndroidEntryPoint
 class TvShowFragment : Fragment() {
 
     companion object {
@@ -19,6 +24,8 @@ class TvShowFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentTvShowBinding
+
+    private val viewModel by viewModels<TvShowViewModel>()
 
     private val tvShowAdapter: TvShowAdapter by lazy {
         TvShowAdapter { item -> setDataMovie(item) }
@@ -36,19 +43,33 @@ class TvShowFragment : Fragment() {
     }
 
     private fun initData() {
-        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[TvShowViewModel::class.java]
-        val tvShows = viewModel.getTvShows()
-        binding.noDataTV.isVisible(tvShows.size <= 0)
-        tvShowAdapter.setTvShows(tvShows)
-        with(binding.tvListRV) {
-            setHasFixedSize(true)
-            adapter = tvShowAdapter
-        }
+        viewModel.getTvShows().observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is ResultData.Loading -> {
+                    Log.e("TAG", "initData: Loading")
+                }
+                is ResultData.Success -> {
+                    binding.noDataTV.isVisible(it.data?.results?.size ?: 0 <= 0)
+                    tvShowAdapter.setTvShows(it.data?.results)
+                    with(binding.tvListRV) {
+                        setHasFixedSize(true)
+                        adapter = tvShowAdapter
+                    }
+                    Log.e("TAG", "initData: Success : ${it.data}")
+                }
+                is ResultData.Failed -> {
+                    Log.e("TAG", "initData: Failed")
+                }
+                is ResultData.Exception -> {
+                    Log.e("TAG", "initData: Exception",)
+                }
+            }
+        })
     }
 
-    private fun setDataMovie(item: MovieData) {
+    private fun setDataMovie(item: ResultTv) {
         context?.openActivity(DetailMovieActivity::class.java) {
-            putString(DetailMovieActivity.EXTRA_ID_MOVIE, item.movieId)
+//            putString(DetailMovieActivity.EXTRA_ID_MOVIE, item.movieId)
             putString(DetailMovieActivity.EXTRA_TAG, TAG)
         }
     }

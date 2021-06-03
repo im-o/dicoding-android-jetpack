@@ -7,7 +7,7 @@ import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import rivaldy.dicoding.jetpack.mvvm.R
-import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieData
+import rivaldy.dicoding.jetpack.mvvm.data.model.api.movie.ResultMovie
 import rivaldy.dicoding.jetpack.mvvm.databinding.RowItemMovieBinding
 
 /**
@@ -15,10 +15,10 @@ import rivaldy.dicoding.jetpack.mvvm.databinding.RowItemMovieBinding
  * Find me on my Github -> https://github.com/im-o
  **/
 
-class MovieAdapter(private val listener: (MovieData) -> Unit) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
-    private var listCourses = ArrayList<MovieData>()
+class MovieAdapter(private val listener: (ResultMovie) -> Unit) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+    private var listCourses = ArrayList<ResultMovie>()
 
-    fun setMovies(movies: List<MovieData>?) {
+    fun setMovies(movies: MutableList<ResultMovie>?) {
         if (movies == null) return
         this.listCourses.clear()
         this.listCourses.addAll(movies)
@@ -37,15 +37,16 @@ class MovieAdapter(private val listener: (MovieData) -> Unit) : RecyclerView.Ada
     override fun getItemCount(): Int = listCourses.size
 
     class MovieViewHolder(private val binding: RowItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bindItem(item: MovieData, listener: (MovieData) -> Unit) {
+        fun bindItem(item: ResultMovie, listener: (ResultMovie) -> Unit) {
             with(binding) {
+                val urlImage = "https://www.themoviedb.org/t/p/w220_and_h330_face${item.backdropPath}"
                 movieTitleTV.text = item.title
-                movieDateTV.text = item.date
-                movieRateTV.text = item.rate
+                movieDateTV.text = item.releaseDate
+                movieRateTV.text = item.voteAverage.toString()
 
                 val picasso = Picasso.get()
                 picasso.setIndicatorsEnabled(true)
-                picasso.load(item.imgPath)
+                picasso.load(urlImage)
                     .placeholder(R.drawable.ic_loading)
                     .error(R.drawable.ic_error)
                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)

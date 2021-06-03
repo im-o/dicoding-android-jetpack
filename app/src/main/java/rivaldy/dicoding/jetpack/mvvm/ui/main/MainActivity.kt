@@ -2,11 +2,13 @@ package rivaldy.dicoding.jetpack.mvvm.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import rivaldy.dicoding.jetpack.mvvm.R
 import rivaldy.dicoding.jetpack.mvvm.databinding.ActivityMainBinding
 import rivaldy.dicoding.jetpack.mvvm.ui.movie.MovieFragment
 import rivaldy.dicoding.jetpack.mvvm.ui.tv_show.TvShowFragment
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

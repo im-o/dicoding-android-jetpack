@@ -15,6 +15,14 @@ import rivaldy.dicoding.jetpack.mvvm.usecase.DataUseCase
  * Find me on my Github -> https://github.com/im-o
  **/
 
-class MovieViewModel : ViewModel() {
-    fun getMovies(): MutableList<MovieData> = MovieDummy.getDummyMovie()
+class MovieViewModel @ViewModelInject constructor(
+    private val useCase: DataUseCase
+): ViewModel() {
+
+    fun getMovies(): LiveData<ResultData<MovieResponse>> {
+        return liveData {
+            emit(ResultData.Loading())
+            emit(useCase.getMovies())
+        }
+    }
 }
