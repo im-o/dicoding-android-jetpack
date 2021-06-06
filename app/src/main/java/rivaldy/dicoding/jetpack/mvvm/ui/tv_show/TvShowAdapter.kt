@@ -9,6 +9,7 @@ import com.squareup.picasso.Picasso
 import rivaldy.dicoding.jetpack.mvvm.R
 import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.ResultTv
 import rivaldy.dicoding.jetpack.mvvm.databinding.RowItemMovieBinding
+import rivaldy.dicoding.jetpack.mvvm.utils.UtilConst.BASE_IMAGE_URL
 
 /**
  * Created by rivaldy on 28/05/21
@@ -39,7 +40,7 @@ class TvShowAdapter(private val listener: (ResultTv) -> Unit) : RecyclerView.Ada
     class TvShowViewHolder(private val binding: RowItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bindItem(item: ResultTv, listener: (ResultTv) -> Unit) {
             with(binding) {
-                val urlImage = "https://www.themoviedb.org/t/p/w220_and_h330_face${item.backdropPath}"
+                val urlImage = BASE_IMAGE_URL+item.backdropPath
                 movieTitleTV.text = item.name
                 movieDateTV.text = item.firstAirDate
                 movieRateTV.text = item.voteAverage.toString()

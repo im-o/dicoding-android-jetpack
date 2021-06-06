@@ -12,4 +12,6 @@
     <string name="sample_0">0.0</string>
     <string name="no_data">Oops… movie data is empty!</string>
     <string name="str_info">%1$s • %2$s • %3$s • %4$s</string>
+    <string name="str_minutes">%1$s Minutes</string>
+    <string name="str_episodes">%1$s Episodes</string>
 </resources>

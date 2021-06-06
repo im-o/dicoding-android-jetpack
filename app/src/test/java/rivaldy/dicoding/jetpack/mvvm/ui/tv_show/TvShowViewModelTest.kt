@@ -17,7 +17,7 @@ class TvShowViewModelTest : TestCase() {
     @Before
     override fun setUp() {
         super.setUp()
-        viewModel = TvShowViewModel()
+//        viewModel = TvShowViewModel()
     }
 
     @Test

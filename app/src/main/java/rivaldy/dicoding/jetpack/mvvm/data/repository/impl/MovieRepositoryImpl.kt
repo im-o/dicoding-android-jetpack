@@ -14,4 +14,5 @@ class MovieRepositoryImpl @Inject constructor(
 ) : MovieRepository {
 
     override suspend fun getMovies() = apiService.getMovies()
+    override suspend fun getMovieDetail(movieId: Int) = apiService.getMovieDetail(movieId)
 }

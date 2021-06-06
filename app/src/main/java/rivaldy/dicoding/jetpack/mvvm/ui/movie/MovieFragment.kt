@@ -69,7 +69,7 @@ class MovieFragment : Fragment() {
 
     private fun setDataMovie(item: ResultMovie) {
         context?.openActivity(DetailMovieActivity::class.java) {
-//            putString(DetailMovieActivity.EXTRA_ID_MOVIE, item.movieId)
+            putInt(DetailMovieActivity.EXTRA_ID_MOVIE, item.id ?: 0)
             putString(DetailMovieActivity.EXTRA_TAG, TAG)
         }
     }

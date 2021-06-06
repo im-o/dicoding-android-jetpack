@@ -1,16 +1,25 @@
 package rivaldy.dicoding.jetpack.mvvm.ui.detail
 
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Observer
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import rivaldy.dicoding.jetpack.mvvm.R
-import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieData
+import rivaldy.dicoding.jetpack.mvvm.data.ResultData
+import rivaldy.dicoding.jetpack.mvvm.data.model.api.movie.detail.MovieDetailResponse
+import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.detail.TvShowDetailResponse
+import rivaldy.dicoding.jetpack.mvvm.data.model.offline.DetailMovieTv
 import rivaldy.dicoding.jetpack.mvvm.databinding.ActivityDetailMovieBinding
 import rivaldy.dicoding.jetpack.mvvm.ui.movie.MovieFragment
+import rivaldy.dicoding.jetpack.mvvm.utils.UtilConst.BASE_IMAGE_URL
+import rivaldy.dicoding.jetpack.mvvm.utils.UtilFunctions.subStringComma
 
+@AndroidEntryPoint
 class DetailMovieActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_ID_MOVIE = "EXTRA_ID_MOVIE"
@@ -18,9 +27,10 @@ class DetailMovieActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityDetailMovieBinding
+    private val viewModel by viewModels<DetailMovieViewModel>()
 
-    private val extraIdMovie: String? by lazy {
-        intent.getStringExtra(EXTRA_ID_MOVIE)
+    private val extraIdMovie: Int? by lazy {
+        intent.getIntExtra(EXTRA_ID_MOVIE, 0)
     }
 
     private val extraTAG: String? by lazy {
@@ -47,34 +57,98 @@ class DetailMovieActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailMovieViewModel::class.java]
         if (extraIdMovie != null) {
-            viewModel.setSelectedMovie(extraIdMovie ?: "")
             if (extraTAG != null) {
-                val movieData = if (extraTAG.equals(MovieFragment.TAG)) viewModel.getDetailMovie() else viewModel.getDetailTvShow()
-                initView(movieData)
+                if (extraTAG.equals(MovieFragment.TAG)) {
+                    viewModel.getDetailMovieById(extraIdMovie ?: 0).observe(this, Observer {
+                        when (it) {
+                            is ResultData.Loading -> {
+                                Log.e("TAG", "initData: Loading")
+                            }
+                            is ResultData.Success -> {
+                                prepareMovie(it.data)
+                                Log.e("TAG", "initData: Success : ${it.data}")
+                            }
+                            is ResultData.Failed -> {
+                                Log.e("TAG", "initData: Failed")
+                            }
+                            is ResultData.Exception -> {
+                                Log.e("TAG", "initData: Exception",)
+                            }
+                        }
+                    })
+                } else {
+                    viewModel.getDetailTvShowById(extraIdMovie ?: 0).observe(this, Observer {
+                        when (it) {
+                            is ResultData.Loading -> {
+                                Log.e("TAG", "initData: Loading")
+                            }
+                            is ResultData.Success -> {
+                                prepareTvShow(it.data)
+                                Log.e("TAG", "initData: Success : ${it.data}")
+                            }
+                            is ResultData.Failed -> {
+                                Log.e("TAG", "initData: Failed")
+                            }
+                            is ResultData.Exception -> {
+                                Log.e("TAG", "initData: Exception",)
+                            }
+                        }
+                    })
+                }
             }
         }
     }
 
-    private fun initView(movie: MovieData?) {
+    private fun prepareMovie(movie: MovieDetailResponse?) {
+        val strCompanies = arrayListOf<String>()
+        val strGenres = arrayListOf<String>()
+        val strRunTime = getString(R.string.str_minutes, movie?.runtime?.toString())
+        val strImgPath = BASE_IMAGE_URL + movie?.backdropPath
+        for (i in (movie?.productionCountries?.indices ?: return)) strCompanies.add(movie.productionCountries?.get(i)?.iso31661.toString())
+        for (i in (movie.genres?.indices ?: return)) strGenres.add(movie.genres?.get(i)?.name.toString())
+        val strInfo = getString(R.string.str_info, movie.releaseDate, strCompanies.subStringComma(), strGenres.subStringComma(), strRunTime)
+
+        val detailMovieTv = DetailMovieTv(
+            movie.title, strInfo, movie.voteAverage.toString(), movie.overview, strImgPath
+        )
+
+        initView(detailMovieTv)
+    }
+
+    private fun prepareTvShow(tvShow: TvShowDetailResponse?) {
+        val strCompanies = arrayListOf<String>()
+        val strGenres = arrayListOf<String>()
+        val strRunTime = getString(R.string.str_episodes, tvShow?.numberOfEpisodes.toString())
+        val strImgPath = BASE_IMAGE_URL + tvShow?.backdropPath
+        for (i in (tvShow?.productionCountries?.indices ?: return)) strCompanies.add(tvShow.productionCountries?.get(i)?.iso31661.toString())
+        for (i in (tvShow.genres?.indices ?: return)) strGenres.add(tvShow.genres?.get(i)?.name.toString())
+
+        val strInfo = getString(R.string.str_info, tvShow.firstAirDate, strCompanies.subStringComma(), strGenres.subStringComma(), strRunTime)
+
+        val detailMovieTv = DetailMovieTv(
+            tvShow.name, strInfo, tvShow.voteAverage.toString(), tvShow.overview, strImgPath
+        )
+
+        initView(detailMovieTv)
+    }
+
+    private fun initView(movieTv: DetailMovieTv) {
         binding.apply {
-            val strInfo = getString(R.string.str_info, movie?.date, movie?.country, movie?.genre, movie?.duration)
-            val strUrl = movie?.imgPath ?: 0
             val picasso = Picasso.get()
             picasso.setIndicatorsEnabled(true)
-            picasso.load(strUrl)
+            picasso.load(movieTv.urlImage)
                 .placeholder(R.drawable.ic_loading)
                 .error(R.drawable.ic_error)
                 .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(movieImageIV)
 
-            movieTitleTV.text = movie?.title ?: getString(R.string.no_detail)
-            titleTV.text = movie?.title ?: getString(R.string.no_detail)
-            infoGenreTV.text = strInfo
-            movieRateTV.text = movie?.rate ?: getString(R.string.rate_0)
-            descriptionTV.text = movie?.desc ?: getString(R.string.no_detail)
+            movieTitleTV.text = movieTv.title ?: getString(R.string.no_detail)
+            titleTV.text = movieTv.title ?: getString(R.string.no_detail)
+            infoGenreTV.text = movieTv.genre
+            movieRateTV.text = movieTv.rate.toString()
+            descriptionTV.text = movieTv.desc ?: getString(R.string.no_detail)
         }
     }
 }

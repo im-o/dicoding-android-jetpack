@@ -1,5 +1,6 @@
 package rivaldy.dicoding.jetpack.mvvm.data.repository.impl
 
+import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.detail.TvShowDetailResponse
 import rivaldy.dicoding.jetpack.mvvm.data.remote.ApiService
 import rivaldy.dicoding.jetpack.mvvm.data.repository.TvShowRepository
 import javax.inject.Inject
@@ -14,4 +15,5 @@ class TvShowRepositoryImpl @Inject constructor(
 ) : TvShowRepository {
 
     override suspend fun getTvShows() = apiService.getTvShows()
+    override suspend fun getTvShowDetail(tvShowId: Int) = apiService.getTvShowDetail(tvShowId)
 }
