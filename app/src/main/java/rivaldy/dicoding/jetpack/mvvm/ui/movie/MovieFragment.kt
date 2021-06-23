@@ -26,6 +26,7 @@ class MovieFragment : Fragment() {
     private lateinit var binding: FragmentMovieBinding
 
     private val viewModel by viewModels<MovieViewModel>()
+//    private val viewModel1 by viewModels<MovieViewModel1>()
 
     private val movieAdapter: MovieAdapter by lazy {
         MovieAdapter { item -> setDataMovie(item) }
@@ -65,6 +66,20 @@ class MovieFragment : Fragment() {
                 }
             }
         })
+
+//        viewModel1.movieResponse.observe(viewLifecycleOwner, { retVal ->
+//            when (retVal.status) {
+//                EnumStatus.SUCCESS -> {
+//                    if (retVal.data == null) {
+//                        return@observe
+//                    }
+//                    val data = retVal.data.results
+//                    Log.e("TAG", "SUCCESS : $data")
+//                }
+//                EnumStatus.LOADING -> Log.e("TAG", "LOADING")
+//                EnumStatus.ERROR -> Log.e("TAG", "ERROR")
+//            }
+//        })
     }
 
     private fun setDataMovie(item: ResultMovie) {
