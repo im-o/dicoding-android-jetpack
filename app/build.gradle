@@ -18,7 +18,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "rivaldy.dicoding.jetpack.mvvm.ui.HiltTestRunner"
         vectorDrawables.useSupportLibrary = true
     }
 
@@ -43,6 +43,10 @@ android {
 
     buildFeatures {
         viewBinding true
+    }
+
+    hilt {
+        enableTransformForLocalTests = true
     }
 }
 
@@ -81,6 +85,16 @@ dependencies {
     //Hilt Dependency Injection
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    // For Robolectric tests.
+    testImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
+    // ...with Kotlin.
+    kaptTest "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    // For instrumented tests.
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
+    // ...with Kotlin.
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     //View Model with Hilt
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_viewmodels"
