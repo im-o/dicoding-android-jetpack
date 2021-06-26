@@ -1,6 +1,6 @@
 package rivaldy.dicoding.jetpack.mvvm.usecase
 
-import rivaldy.dicoding.jetpack.mvvm.data.ResultData
+import androidx.lifecycle.MutableLiveData
 import rivaldy.dicoding.jetpack.mvvm.data.model.api.movie.MovieResponse
 import rivaldy.dicoding.jetpack.mvvm.data.model.api.movie.detail.MovieDetailResponse
 import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.TvShowResponse
@@ -18,40 +18,74 @@ class DataUseCase @Inject constructor(
     private val movieRepositoryImpl: MovieRepositoryImpl,
     private val tvShowRepositoryImpl: TvShowRepositoryImpl
 ) {
+    val failureMessage = MutableLiveData<Throwable>()
+    val onIsLoadData = MutableLiveData<Boolean>()
 
-    suspend fun getMovies(): ResultData<MovieResponse> {
-        val movieResponse = movieRepositoryImpl.getMovies()
-        return if (movieResponse.page != null) {
-            ResultData.Success(movieResponse)
-        } else {
-            ResultData.Failed(movieResponse.toString())
-        }
+    fun getMovies(): MutableLiveData<MovieResponse> {
+        onIsLoadData.postValue(true)
+        val movieLiveData = MutableLiveData<MovieResponse>()
+        movieRepositoryImpl.getMovies(object : MovieRepositoryImpl.OnGetMovieCallback {
+            override fun onGetMovie(movie: MovieResponse) {
+                movieLiveData.postValue(movie)
+                onIsLoadData.postValue(false)
+            }
+
+            override fun onFailure(throwable: Throwable) {
+                failureMessage.postValue(throwable)
+                onIsLoadData.postValue(false)
+            }
+        })
+        return movieLiveData
     }
 
-    suspend fun getTvShows(): ResultData<TvShowResponse> {
-        val tvShowResponse = tvShowRepositoryImpl.getTvShows()
-        return if (tvShowResponse.page != null) {
-            ResultData.Success(tvShowResponse)
-        } else {
-            ResultData.Failed(tvShowResponse.toString())
-        }
+    fun getMovieDetail(movieId: Int): MutableLiveData<MovieDetailResponse> {
+        onIsLoadData.postValue(true)
+        val movieDetailLiveData = MutableLiveData<MovieDetailResponse>()
+        movieRepositoryImpl.getMovieDetail(movieId, object : MovieRepositoryImpl.OnGetMovieDetailCallback {
+            override fun onGetMovieDetail(movieDetail: MovieDetailResponse) {
+                movieDetailLiveData.postValue(movieDetail)
+                onIsLoadData.postValue(false)
+            }
+
+            override fun onFailure(throwable: Throwable) {
+                failureMessage.postValue(throwable)
+                onIsLoadData.postValue(false)
+            }
+        })
+        return movieDetailLiveData
     }
 
-    suspend fun getMovieDetail(movieId: Int): ResultData<MovieDetailResponse> {
-        val movieResponse = movieRepositoryImpl.getMovieDetail(movieId)
-        return if (movieResponse.id != null) {
-            ResultData.Success(movieResponse)
-        } else {
-            ResultData.Failed(movieResponse.toString())
-        }
+    fun getTvShows(): MutableLiveData<TvShowResponse> {
+        onIsLoadData.postValue(true)
+        val tvShowsLiveData = MutableLiveData<TvShowResponse>()
+        tvShowRepositoryImpl.getTvShows(object : TvShowRepositoryImpl.OnGetTvShowCallback {
+            override fun onGetTvShow(tvShow: TvShowResponse) {
+                tvShowsLiveData.postValue(tvShow)
+                onIsLoadData.postValue(false)
+            }
+
+            override fun onFailure(throwable: Throwable) {
+                failureMessage.postValue(throwable)
+                onIsLoadData.postValue(false)
+            }
+        })
+        return tvShowsLiveData
     }
 
-    suspend fun getTvShowDetail(tvShowId: Int): ResultData<TvShowDetailResponse> {
-        val tvShowResponse = tvShowRepositoryImpl.getTvShowDetail(tvShowId)
-        return if (tvShowResponse.id != null) {
-            ResultData.Success(tvShowResponse)
-        } else {
-            ResultData.Failed(tvShowResponse.toString())
-        }
+    fun getTvShowDetail(tvShowId: Int): MutableLiveData<TvShowDetailResponse> {
+        onIsLoadData.postValue(true)
+        val tvShowDetailLiveData = MutableLiveData<TvShowDetailResponse>()
+        tvShowRepositoryImpl.getTvShowDetail(tvShowId, object : TvShowRepositoryImpl.OnGetTvShowDetailCallback {
+            override fun onGetTvShowDetail(tvShowDetail: TvShowDetailResponse) {
+                tvShowDetailLiveData.postValue(tvShowDetail)
+                onIsLoadData.postValue(false)
+            }
+
+            override fun onFailure(throwable: Throwable) {
+                failureMessage.postValue(throwable)
+                onIsLoadData.postValue(false)
+            }
+        })
+        return tvShowDetailLiveData
     }
 }

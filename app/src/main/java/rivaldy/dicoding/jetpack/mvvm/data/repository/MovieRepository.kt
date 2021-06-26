@@ -1,8 +1,6 @@
 package rivaldy.dicoding.jetpack.mvvm.data.repository
 
-import rivaldy.dicoding.jetpack.mvvm.data.model.api.movie.MovieResponse
-import rivaldy.dicoding.jetpack.mvvm.data.model.api.movie.detail.MovieDetailResponse
-import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.TvShowResponse
+import rivaldy.dicoding.jetpack.mvvm.data.repository.impl.MovieRepositoryImpl
 
 /**
  * Created by rivaldy on 03/06/21
@@ -10,6 +8,6 @@ import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.TvShowResponse
  **/
 
 interface MovieRepository {
-    suspend fun getMovies(): MovieResponse?
-    suspend fun getMovieDetail(movieId: Int) : MovieDetailResponse?
+    fun getMovies(callback: MovieRepositoryImpl.OnGetMovieCallback)
+    fun getMovieDetail(movieId: Int, callback: MovieRepositoryImpl.OnGetMovieDetailCallback)
 }

@@ -12,4 +12,5 @@
     <dimen name="space_14">14dp</dimen>
     <dimen name="space_16">16dp</dimen>
     <dimen name="space_120">120dp</dimen>
+    <dimen name="space_200">200dp</dimen>
 </resources>

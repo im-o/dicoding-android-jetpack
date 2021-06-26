@@ -1,5 +1,6 @@
 package rivaldy.dicoding.jetpack.mvvm.data.remote
 
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import rivaldy.dicoding.jetpack.mvvm.data.model.api.movie.MovieResponse
@@ -14,14 +15,14 @@ import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.detail.TvShowDetailR
 
 interface ApiService {
     @GET("discover/movie")
-    suspend fun getMovies(): MovieResponse
+    fun getMovies(): Call<MovieResponse>
 
     @GET("movie/{movie_id}")
-    suspend fun getMovieDetail(@Path("movie_id") movieId: Int): MovieDetailResponse
+    fun getMovieDetail(@Path("movie_id") movieId: Int): Call<MovieDetailResponse>
 
     @GET("discover/tv")
-    suspend fun getTvShows(): TvShowResponse
+    fun getTvShows(): Call<TvShowResponse>
 
     @GET("tv/{tv_id}")
-    suspend fun getTvShowDetail(@Path("tv_id") tvShowId: Int): TvShowDetailResponse
+    fun getTvShowDetail(@Path("tv_id") tvShowId: Int): Call<TvShowDetailResponse>
 }

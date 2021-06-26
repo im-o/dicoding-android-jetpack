@@ -14,4 +14,5 @@ object UtilConst {
     const val API_KEY = "8b904530a7aced766995fa063ed27355"
     const val DEFAULT_LANG = "en-US"
     const val BASE_IMAGE_URL = "https://www.themoviedb.org/t/p/w220_and_h330_face"
+    const val ERROR_MESSAGE = "ERROR MESSAGE"
 }

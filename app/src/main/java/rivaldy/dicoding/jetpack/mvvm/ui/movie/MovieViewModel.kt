@@ -1,13 +1,7 @@
 package rivaldy.dicoding.jetpack.mvvm.ui.movie
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import rivaldy.dicoding.jetpack.mvvm.data.ResultData
-import rivaldy.dicoding.jetpack.mvvm.data.model.api.movie.MovieResponse
-import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieData
-import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieDummy
 import rivaldy.dicoding.jetpack.mvvm.usecase.DataUseCase
 
 /**
@@ -19,10 +13,7 @@ class MovieViewModel @ViewModelInject constructor(
     private val useCase: DataUseCase
 ): ViewModel() {
 
-    fun getMovies(): LiveData<ResultData<MovieResponse>> {
-        return liveData {
-            emit(ResultData.Loading())
-            emit(useCase.getMovies())
-        }
-    }
+    fun getMovies() = useCase.getMovies()
+    fun getFailureMessage() = useCase.failureMessage
+    fun getIsLoadData() = useCase.onIsLoadData
 }

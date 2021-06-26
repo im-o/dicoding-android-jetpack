@@ -1,20 +1,18 @@
 package rivaldy.dicoding.jetpack.mvvm.ui.movie
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
-import rivaldy.dicoding.jetpack.mvvm.data.ResultData
 import rivaldy.dicoding.jetpack.mvvm.data.model.api.movie.ResultMovie
 import rivaldy.dicoding.jetpack.mvvm.databinding.FragmentMovieBinding
 import rivaldy.dicoding.jetpack.mvvm.ui.detail.DetailMovieActivity
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.isVisible
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.openActivity
+import rivaldy.dicoding.jetpack.mvvm.utils.UtilFunctions.loge
 
 @AndroidEntryPoint
 class MovieFragment : Fragment() {
@@ -40,31 +38,30 @@ class MovieFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         activity ?: return
         initData()
+        initObserver()
+    }
+
+    private fun initObserver() {
+        viewModel.getMovies().observe(viewLifecycleOwner, {
+            binding.noDataTV.isVisible(it.results?.size ?: 0 <= 0)
+            movieAdapter.setMovies(it.results)
+            with(binding.movieListRV) {
+                setHasFixedSize(true)
+                adapter = movieAdapter
+            }
+        })
+
+        viewModel.getFailureMessage().observe(viewLifecycleOwner, {
+            loge(it.message.toString())
+        })
+
+        viewModel.getIsLoadData().observe(viewLifecycleOwner, {
+            binding.loadingSKV.isVisible(it)
+        })
     }
 
     private fun initData() {
-        viewModel.getMovies().observe(viewLifecycleOwner, Observer {
-            when (it) {
-                is ResultData.Loading -> {
-                    Log.e("TAG", "initData: Loading")
-                }
-                is ResultData.Success -> {
-                    binding.noDataTV.isVisible(it.data?.results?.size ?: 0 <= 0)
-                    movieAdapter.setMovies(it.data?.results)
-                    with(binding.movieListRV) {
-                        setHasFixedSize(true)
-                        adapter = movieAdapter
-                    }
-                    Log.e("TAG", "initData: Success : ${it.data}")
-                }
-                is ResultData.Failed -> {
-                    Log.e("TAG", "initData: Failed")
-                }
-                is ResultData.Exception -> {
-                    Log.e("TAG", "initData: Exception",)
-                }
-            }
-        })
+
     }
 
     private fun setDataMovie(item: ResultMovie) {
