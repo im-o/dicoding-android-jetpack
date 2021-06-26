@@ -15,4 +15,8 @@ object UtilConst {
     const val DEFAULT_LANG = "en-US"
     const val BASE_IMAGE_URL = "https://www.themoviedb.org/t/p/w220_and_h330_face"
     const val ERROR_MESSAGE = "ERROR MESSAGE"
+
+    // ** TODO - CHANGE THIS ID IF YOU FOUND DETAIL MOVIE IS ERROR
+    const val SAMPLE_MOVIE_ID = 508943
+    const val SAMPLE_TV_SHOW_ID = 84958
 }

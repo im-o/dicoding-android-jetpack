@@ -7,6 +7,7 @@ import rivaldy.dicoding.jetpack.mvvm.data.model.api.movie.MovieResponse
 import rivaldy.dicoding.jetpack.mvvm.data.model.api.movie.detail.MovieDetailResponse
 import rivaldy.dicoding.jetpack.mvvm.data.remote.ApiService
 import rivaldy.dicoding.jetpack.mvvm.data.repository.MovieRepository
+import rivaldy.dicoding.jetpack.mvvm.utils.EspressoIdlingResource
 import javax.inject.Inject
 
 /**
@@ -19,26 +20,31 @@ class MovieRepositoryImpl @Inject constructor(
 ) : MovieRepository {
 
     override fun getMovies(callback: OnGetMovieCallback) {
+        EspressoIdlingResource.increment()
         apiService.getMovies().enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 callback.onGetMovie(response.body() ?: return)
+                EspressoIdlingResource.decrement()
             }
 
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                 callback.onFailure(t)
+                EspressoIdlingResource.decrement()
             }
         })
     }
 
     override fun getMovieDetail(movieId: Int, callback: OnGetMovieDetailCallback) {
+        EspressoIdlingResource.increment()
         apiService.getMovieDetail(movieId).enqueue(object : Callback<MovieDetailResponse> {
             override fun onResponse(call: Call<MovieDetailResponse>, response: Response<MovieDetailResponse>) {
-                val result = response.body()
-                callback.onGetMovieDetail(result ?: return)
+                callback.onGetMovieDetail(response.body() ?: return)
+                EspressoIdlingResource.decrement()
             }
 
             override fun onFailure(call: Call<MovieDetailResponse>, t: Throwable) {
                 callback.onFailure(t)
+                EspressoIdlingResource.decrement()
             }
         })
     }
