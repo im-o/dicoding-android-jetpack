@@ -13,7 +13,7 @@ data class TvShowDetailResponse(
     @SerializedName("first_air_date")
     var firstAirDate: String? = null,
     @SerializedName("genres")
-    var genres: List<Genre>? = null,
+    var genres: List<GenreTv>? = null,
     @SerializedName("homepage")
     var homepage: String? = null,
     @SerializedName("id")
@@ -51,7 +51,7 @@ data class TvShowDetailResponse(
     @SerializedName("production_companies")
     var productionCompanies: List<ProductionCompany>? = null,
     @SerializedName("production_countries")
-    var productionCountries: List<ProductionCountry>? = null,
+    var productionCountries: List<ProductionCountryTv>? = null,
     @SerializedName("seasons")
     var seasons: List<Season>? = null,
     @SerializedName("spoken_languages")

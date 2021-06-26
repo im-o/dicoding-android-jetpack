@@ -56,4 +56,8 @@ ext {
     hilt_viewmodels = '1.0.0-alpha01'
     idleResourceVersion = '3.2.0'
     spinKitVersion = '1.4.0'
+
+    androidCoreTestVersion = '2.1.0'
+    mockitoVersion = '3.6.0'
+    mockitoKotlinVersion = '2.2.0'
 }
