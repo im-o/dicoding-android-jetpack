@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package rivaldy.dicoding.jetpack.mvvm.ui.main
 
 import androidx.fragment.app.Fragment

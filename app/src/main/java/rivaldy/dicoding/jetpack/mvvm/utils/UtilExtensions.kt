@@ -3,9 +3,7 @@ package rivaldy.dicoding.jetpack.mvvm.utils
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
 import android.view.View
-import android.widget.EditText
 import android.widget.Toast
 
 /**
@@ -26,9 +24,5 @@ object UtilExtensions {
 
     fun Context.myToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-    }
-
-    fun EditText.setTextEditable(text: String) {
-        this.text = Editable.Factory.getInstance().newEditable(text)
     }
 }

@@ -8,7 +8,6 @@
     <string name="overview">Overview</string>
     <string name="powered_by">github.com/im-o • bdd2021 • dicoding</string>
     <string name="no_detail">No detail movie</string>
-    <string name="rate_0">0.0</string>
     <string name="sample_0">0.0</string>
     <string name="no_data">Oops… data movie is empty!</string>
     <string name="no_data_detail">Oops… detail movie is empty!</string>
