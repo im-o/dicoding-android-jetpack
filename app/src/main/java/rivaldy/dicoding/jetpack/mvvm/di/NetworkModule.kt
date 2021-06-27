@@ -12,6 +12,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import rivaldy.dicoding.jetpack.mvvm.BuildConfig
 import rivaldy.dicoding.jetpack.mvvm.data.remote.ApiService
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilConst
+import rivaldy.dicoding.jetpack.mvvm.utils.UtilConst.PATH_API_KEY
+import rivaldy.dicoding.jetpack.mvvm.utils.UtilConst.PATH_DEFAULT_LANG
 
 /**
  * Created by rivaldy on 03/06/21
@@ -42,8 +44,8 @@ object NetworkModule {
                     .request()
                     .url
                     .newBuilder()
-                    .addQueryParameter("api_key", UtilConst.API_KEY)
-                    .addQueryParameter("language", UtilConst.DEFAULT_LANG)
+                    .addQueryParameter(PATH_API_KEY, UtilConst.API_KEY)
+                    .addQueryParameter(PATH_DEFAULT_LANG, UtilConst.DEFAULT_LANG)
                     .build()
                 chain.proceed(chain.request().newBuilder().url(url).build())
             }

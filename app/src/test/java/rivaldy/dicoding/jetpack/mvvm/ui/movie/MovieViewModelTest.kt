@@ -1,28 +1,63 @@
 package rivaldy.dicoding.jetpack.mvvm.ui.movie
 
-import junit.framework.TestCase
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import com.nhaarman.mockitokotlin2.verify
+import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertNotNull
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
-import rivaldy.dicoding.jetpack.mvvm.utils.UtilConst.SIZE_EXPECTED_10
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.Mockito.`when`
+import org.mockito.junit.MockitoJUnitRunner
+import rivaldy.dicoding.jetpack.mvvm.data.model.api.movie.MovieResponse
+import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.TvShowResponse
+import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieDummy
+import rivaldy.dicoding.jetpack.mvvm.usecase.DataUseCase
 
 /**
  * Created by rivaldy on 29/05/21
  * Find me on my Github -> https://github.com/im-o
  */
-class MovieViewModelTest : TestCase() {
 
-//    private lateinit var viewModel: MovieViewModel
-//
-//    @Before
-//    override fun setUp() {
-//        super.setUp()
-//        viewModel = MovieViewModel()
-//    }
-//
-//    @Test
-//    fun testGetMovies() {
-//        val movies = viewModel.getMovies()
-//        assertNotNull(movies)
-//        assertEquals(SIZE_EXPECTED_10, movies.size)
-//    }
+@RunWith(MockitoJUnitRunner::class)
+class MovieViewModelTest {
+
+    private lateinit var viewModel: MovieViewModel
+
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    @Mock
+    private lateinit var useCase: DataUseCase
+
+    @Mock
+    private lateinit var observerMovieResponse: Observer<MovieResponse>
+
+    @Mock
+    private lateinit var observerTvShowResponse: Observer<TvShowResponse>
+
+    @Before
+    fun setUp() {
+        viewModel = MovieViewModel(useCase)
+    }
+
+    @Test
+    fun testGetMovies() {
+        val movieDummy = MovieDummy.getDummyMovie()
+        val movieResponse = MutableLiveData<MovieResponse>()
+        movieResponse.value = movieDummy
+
+        `when`(useCase.getMovies()).thenReturn(movieResponse)
+        val movies = viewModel.getMovies().value
+        verify(useCase).getMovies()
+        assertNotNull(movies)
+        assertEquals(movieDummy.results?.size, movies?.results?.size)
+
+        viewModel.getMovies().observeForever(observerMovieResponse)
+        verify(observerMovieResponse).onChanged(movieDummy)
+    }
 }

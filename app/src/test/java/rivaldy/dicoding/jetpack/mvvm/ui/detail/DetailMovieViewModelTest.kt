@@ -1,52 +1,85 @@
 package rivaldy.dicoding.jetpack.mvvm.ui.detail
 
-import junit.framework.TestCase
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import com.nhaarman.mockitokotlin2.verify
+import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertNotNull
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.Mockito.`when`
+import org.mockito.junit.MockitoJUnitRunner
+import rivaldy.dicoding.jetpack.mvvm.data.model.api.movie.detail.MovieDetailResponse
+import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.detail.TvShowDetailResponse
+import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieDummy
+import rivaldy.dicoding.jetpack.mvvm.usecase.DataUseCase
 
 /**
  * Created by rivaldy on 29/05/21
  * Find me on my Github -> https://github.com/im-o
  */
-class DetailMovieViewModelTest : TestCase() {
 
-//    private lateinit var viewModel: DetailMovieViewModel
-//    private val movieDummy = MovieDummy.getDummyMovie()[0]
-//    private val tvShowDummy = MovieDummy.getDummyTvShow()[0]
-//    private val movieId = movieDummy.movieId
-//    private val tvShowId = tvShowDummy.movieId
-//
-//    @Before
-//    override fun setUp() {
-//        super.setUp()
-//        viewModel = DetailMovieViewModel()
-//    }
-//
-//    @Test
-//    fun testGetDetailMovie() {
-//        viewModel.setSelectedMovie(movieId)
-//        val movie = viewModel.getDetailMovie()
-//        assertNotNull(movie)
-//        assertEquals(movieDummy, movie)
-//        assertEquals(movieDummy.title, movie.title)
-//        assertEquals(movieDummy.date, movie.date)
-//        assertEquals(movieDummy.desc, movie.desc)
-//        assertEquals(movieDummy.duration, movie.duration)
-//        assertEquals(movieDummy.imgPath, movie.imgPath)
-//        assertEquals(movieDummy.genre, movie.genre)
-//        assertEquals(movieDummy.rate, movie.rate)
-//    }
-//
-//    @Test
-//    fun testGetDetailTvShow() {
-//        viewModel.setSelectedMovie(tvShowId)
-//        val tvShow = viewModel.getDetailTvShow()
-//        assertNotNull(tvShow)
-//        assertEquals(tvShowDummy, tvShow)
-//        assertEquals(tvShowDummy.title, tvShow.title)
-//        assertEquals(tvShowDummy.date, tvShow.date)
-//        assertEquals(tvShowDummy.desc, tvShow.desc)
-//        assertEquals(tvShowDummy.duration, tvShow.duration)
-//        assertEquals(tvShowDummy.imgPath, tvShow.imgPath)
-//        assertEquals(tvShowDummy.genre, tvShow.genre)
-//        assertEquals(tvShowDummy.rate, tvShow.rate)
-//    }
+@RunWith(MockitoJUnitRunner::class)
+class DetailMovieViewModelTest {
+
+    private lateinit var viewModel: DetailMovieViewModel
+    private val movieDetailDummy = MovieDummy.getDummyMovieDetail()
+    private val tvShowDetailDummy = MovieDummy.getDummyTvShowDetail()
+    private val movieIdDummy = movieDetailDummy.id ?: 0
+    private val tvShowIdDummy = tvShowDetailDummy.id ?: 0
+
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    @Mock
+    private lateinit var useCase: DataUseCase
+
+    @Mock
+    private lateinit var observerMovieDetailResponse: Observer<MovieDetailResponse>
+
+    @Mock
+    private lateinit var observerTvShowDetailResponse: Observer<TvShowDetailResponse>
+
+    @Before
+    fun setUp() {
+        viewModel = DetailMovieViewModel(useCase)
+    }
+
+    @Test
+    fun testGetDetailMovie() {
+        val movieDetailResponse = MutableLiveData<MovieDetailResponse>()
+        movieDetailResponse.value = movieDetailDummy
+
+        `when`(useCase.getMovieDetail(movieIdDummy)).thenReturn(movieDetailResponse)
+        val movieDetail = viewModel.getDetailMovieById(movieIdDummy).value
+        verify(useCase).getMovieDetail(movieIdDummy)
+
+        assertNotNull(movieDetail)
+        assertEquals(movieDetailDummy.id, movieDetail?.id)
+        assertEquals(movieDetailDummy, movieDetail)
+
+        viewModel.getDetailMovieById(movieDetail?.id ?: 0).observeForever(observerMovieDetailResponse)
+        verify(observerMovieDetailResponse).onChanged(movieDetailDummy)
+    }
+
+    @Test
+    fun testGetDetailTvShow() {
+        val tvShowDetailResponse = MutableLiveData<TvShowDetailResponse>()
+        tvShowDetailResponse.value = tvShowDetailDummy
+
+        `when`(useCase.getTvShowDetail(tvShowIdDummy)).thenReturn(tvShowDetailResponse)
+        val tvShowDetail = viewModel.getDetailTvShowById(tvShowIdDummy).value
+        verify(useCase).getTvShowDetail(tvShowIdDummy)
+
+        assertNotNull(tvShowDetail)
+        assertEquals(tvShowDetailDummy.id, tvShowDetail?.id)
+        assertEquals(tvShowDetailDummy, tvShowDetail)
+
+        viewModel.getDetailTvShowById(tvShowDetail?.id ?: 0).observeForever(observerTvShowDetailResponse)
+        verify(observerTvShowDetailResponse).onChanged(tvShowDetailDummy)
+    }
 }

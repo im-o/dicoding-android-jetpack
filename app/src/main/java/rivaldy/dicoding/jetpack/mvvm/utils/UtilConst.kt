@@ -11,8 +11,11 @@ object UtilConst {
     const val SAMPLE_POSITION = 0
     const val DELAY_2000 = 2000.toLong()
 
+    const val PATH_API_KEY = "api_key"
+    const val PATH_DEFAULT_LANG = "language"
     const val API_KEY = "8b904530a7aced766995fa063ed27355"
     const val DEFAULT_LANG = "en-US"
+
     const val BASE_IMAGE_URL = "https://www.themoviedb.org/t/p/w220_and_h330_face"
     const val ERROR_MESSAGE = "ERROR MESSAGE"
 
