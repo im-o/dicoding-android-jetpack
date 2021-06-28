@@ -2,12 +2,14 @@ package rivaldy.dicoding.jetpack.mvvm.ui.favorite.tv_show
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import rivaldy.dicoding.jetpack.mvvm.R
-import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.ResultTv
+import rivaldy.dicoding.jetpack.mvvm.data.model.db.TvShowEntity
 import rivaldy.dicoding.jetpack.mvvm.databinding.RowItemMovieBinding
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilConst.BASE_IMAGE_URL
 
@@ -16,14 +18,7 @@ import rivaldy.dicoding.jetpack.mvvm.utils.UtilConst.BASE_IMAGE_URL
  * Find me on my Github -> https://github.com/im-o
  **/
 
-class TvShowFavAdapter(private val listener: (ResultTv) -> Unit) : RecyclerView.Adapter<TvShowFavAdapter.TvShowViewHolder>() {
-    private var listCourses = ArrayList<ResultTv>()
-
-    fun setTvShows(tvShows: List<ResultTv>?) {
-        if (tvShows == null) return
-        this.listCourses.clear()
-        this.listCourses.addAll(tvShows)
-    }
+class TvShowFavAdapter(private val listener: (TvShowEntity) -> Unit) : PagedListAdapter<TvShowEntity, TvShowFavAdapter.TvShowViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TvShowViewHolder {
         val rowItemMovieBinding = RowItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -31,14 +26,12 @@ class TvShowFavAdapter(private val listener: (ResultTv) -> Unit) : RecyclerView.
     }
 
     override fun onBindViewHolder(holder: TvShowViewHolder, position: Int) {
-        val movie = listCourses[position]
-        holder.bindItem(movie, listener)
+        val tvShow = getItem(position)
+        holder.bindItem(tvShow ?: return, listener)
     }
 
-    override fun getItemCount(): Int = listCourses.size
-
     class TvShowViewHolder(private val binding: RowItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bindItem(item: ResultTv, listener: (ResultTv) -> Unit) {
+        fun bindItem(item: TvShowEntity, listener: (TvShowEntity) -> Unit) {
             with(binding) {
                 val urlImage = BASE_IMAGE_URL + item.backdropPath
                 movieTitleTV.text = item.name
@@ -54,6 +47,19 @@ class TvShowFavAdapter(private val listener: (ResultTv) -> Unit) : RecyclerView.
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(movieImageIV)
                 root.setOnClickListener { listener(item) }
+            }
+        }
+    }
+
+
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TvShowEntity>() {
+            override fun areItemsTheSame(oldItem: TvShowEntity, newItem: TvShowEntity): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: TvShowEntity, newItem: TvShowEntity): Boolean {
+                return oldItem == newItem
             }
         }
     }

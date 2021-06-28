@@ -21,7 +21,6 @@ import rivaldy.dicoding.jetpack.mvvm.utils.UtilConst.BASE_IMAGE_URL
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.isVisible
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.myToast
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.showSnackBar
-import rivaldy.dicoding.jetpack.mvvm.utils.UtilFunctions.loge
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilFunctions.subStringComma
 
 @AndroidEntryPoint
@@ -96,10 +95,6 @@ class DetailMovieActivity : AppCompatActivity() {
 
         viewModel.getIsLoadData().observe(this, {
             binding.loadingSKV.isVisible(it)
-        })
-
-        viewModel.loadMovie().observe(this, {
-            for (i in it.indices) loge("This DATA DB : ${it[i]}")
         })
     }
 

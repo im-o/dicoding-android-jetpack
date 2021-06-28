@@ -7,13 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import rivaldy.dicoding.jetpack.mvvm.data.model.api.movie.ResultMovie
+import rivaldy.dicoding.jetpack.mvvm.data.model.db.MovieEntity
 import rivaldy.dicoding.jetpack.mvvm.databinding.FragmentMovieBinding
 import rivaldy.dicoding.jetpack.mvvm.ui.detail.DetailMovieActivity
 import rivaldy.dicoding.jetpack.mvvm.ui.movie.MovieFragment
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.isVisible
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.openActivity
-import rivaldy.dicoding.jetpack.mvvm.utils.UtilFunctions.loge
 
 @AndroidEntryPoint
 class MovieFavFragment : Fragment() {
@@ -35,27 +34,20 @@ class MovieFavFragment : Fragment() {
     }
 
     private fun initObserver() {
-        viewModel.getMovies().observe(viewLifecycleOwner, {
-            binding.noDataTV.isVisible(it.results?.size ?: 0 <= 0)
-            movieAdapter.setMovies(it.results)
+        viewModel.loadMovie().observe(viewLifecycleOwner, {
+            binding.loadingSKV.isVisible(false)
+            binding.noDataTV.isVisible(it.size <= 0)
+            movieAdapter.submitList(it)
             with(binding.movieListRV) {
                 setHasFixedSize(true)
                 adapter = movieAdapter
             }
         })
-
-        viewModel.getFailureMessage().observe(viewLifecycleOwner, {
-            loge(it.message.toString())
-        })
-
-        viewModel.getIsLoadData().observe(viewLifecycleOwner, {
-            binding.loadingSKV.isVisible(it)
-        })
     }
 
-    private fun setDataMovie(item: ResultMovie) {
+    private fun setDataMovie(item: MovieEntity) {
         context?.openActivity(DetailMovieActivity::class.java) {
-            putInt(DetailMovieActivity.EXTRA_ID_MOVIE, item.id ?: 0)
+            putInt(DetailMovieActivity.EXTRA_ID_MOVIE, item.id)
             putString(DetailMovieActivity.EXTRA_TAG, TAG)
         }
     }

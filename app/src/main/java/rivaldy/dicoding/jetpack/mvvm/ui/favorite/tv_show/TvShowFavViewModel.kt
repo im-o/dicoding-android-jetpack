@@ -13,7 +13,5 @@ class TvShowFavViewModel @ViewModelInject constructor(
     private val useCase: DataUseCase
 ) : ViewModel() {
 
-    fun getTvShows() = useCase.getTvShows()
-    fun getFailureMessage() = useCase.failureMessage
-    fun getIsLoadData() = useCase.onIsLoadData
+    fun loadTvShow() = useCase.loadTvShow()
 }

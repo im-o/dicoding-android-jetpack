@@ -13,7 +13,5 @@ class MovieFavViewModel @ViewModelInject constructor(
     private val useCase: DataUseCase
 ) : ViewModel() {
 
-    fun getMovies() = useCase.getMovies()
-    fun getFailureMessage() = useCase.failureMessage
-    fun getIsLoadData() = useCase.onIsLoadData
+    fun loadMovie() = useCase.loadMovie()
 }

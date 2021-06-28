@@ -7,13 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.ResultTv
+import rivaldy.dicoding.jetpack.mvvm.data.model.db.TvShowEntity
 import rivaldy.dicoding.jetpack.mvvm.databinding.FragmentTvShowBinding
 import rivaldy.dicoding.jetpack.mvvm.ui.detail.DetailMovieActivity
 import rivaldy.dicoding.jetpack.mvvm.ui.tv_show.TvShowFragment
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.isVisible
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.openActivity
-import rivaldy.dicoding.jetpack.mvvm.utils.UtilFunctions.loge
 
 @AndroidEntryPoint
 class TvShowFavFragment : Fragment() {
@@ -35,27 +34,20 @@ class TvShowFavFragment : Fragment() {
     }
 
     private fun initObserver() {
-        viewModel.getTvShows().observe(viewLifecycleOwner, {
-            binding.noDataTV.isVisible(it.results?.size ?: 0 <= 0)
-            tvShowFavAdapter.setTvShows(it.results)
+        viewModel.loadTvShow().observe(viewLifecycleOwner, {
+            binding.loadingSKV.isVisible(false)
+            binding.noDataTV.isVisible(it.size <= 0)
+            tvShowFavAdapter.submitList(it)
             with(binding.tvListRV) {
                 setHasFixedSize(true)
                 adapter = tvShowFavAdapter
             }
         })
-
-        viewModel.getFailureMessage().observe(viewLifecycleOwner, {
-            loge(it.message.toString())
-        })
-
-        viewModel.getIsLoadData().observe(viewLifecycleOwner, {
-            binding.loadingSKV.isVisible(it)
-        })
     }
 
-    private fun setDataMovie(item: ResultTv) {
+    private fun setDataMovie(item: TvShowEntity) {
         context?.openActivity(DetailMovieActivity::class.java) {
-            putInt(DetailMovieActivity.EXTRA_ID_MOVIE, item.id ?: 0)
+            putInt(DetailMovieActivity.EXTRA_ID_MOVIE, item.id)
             putString(DetailMovieActivity.EXTRA_TAG, TAG)
         }
     }

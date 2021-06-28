@@ -36,7 +36,6 @@ class DetailMovieViewModel @ViewModelInject constructor(
         }
     }
 
-    fun loadMovie() = useCase.loadMovie()
     fun getMovieById(movieId: Int) = useCase.getMovieById(movieId)
 
     suspend fun insertTvShow(tvShowEntity: TvShowEntity) {
@@ -51,6 +50,5 @@ class DetailMovieViewModel @ViewModelInject constructor(
         }
     }
 
-    fun loadTvShow() = useCase.loadTvShow()
     fun getTvShowById(tvShowId: Int) = useCase.getTvShowById(tvShowId)
 }
