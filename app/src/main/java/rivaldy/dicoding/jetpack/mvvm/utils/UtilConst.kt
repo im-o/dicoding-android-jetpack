@@ -21,4 +21,6 @@ object UtilConst {
     // ** TODO - CHANGE THIS ID IF YOU FOUND DETAIL MOVIE IS ERROR
     const val SAMPLE_MOVIE_ID = 508943
     const val SAMPLE_TV_SHOW_ID = 84958
+
+    const val DB_THE_MOVIE_DB = "db_the_movie_db"
 }

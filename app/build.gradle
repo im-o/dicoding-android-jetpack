@@ -54,7 +54,6 @@ dependencies {
     //kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:$coreVersion"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     //ui
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
@@ -122,4 +121,17 @@ dependencies {
 
     // Loading Progress - SpinKit
     implementation "com.github.ybq:Android-SpinKit:$spinKitVersion"
+
+    //Coroutines
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
+
+    //Paging
+    implementation "androidx.paging:paging-runtime:$pagingVersion"
+
+    // Android Room
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$roomVersion"
 }
