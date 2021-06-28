@@ -23,4 +23,5 @@ object UtilConst {
     const val SAMPLE_TV_SHOW_ID = 84958
 
     const val DB_THE_MOVIE_DB = "db_the_movie_db"
+    const val STR_FAV_MOVIE = "Favorite Movie"
 }
