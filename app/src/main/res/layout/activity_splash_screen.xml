@@ -11,7 +11,7 @@
         android:id="@+id/iconIV"
         android:layout_width="@dimen/space_120"
         android:layout_height="@dimen/space_120"
-        android:contentDescription="@string/todo"
+        android:contentDescription="@string/icon"
         android:src="@drawable/ic_movie_db_green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

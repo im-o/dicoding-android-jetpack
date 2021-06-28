@@ -20,11 +20,6 @@ import rivaldy.dicoding.jetpack.mvvm.utils.UtilFunctions.subStringComma
 
 @AndroidEntryPoint
 class DetailMovieActivity : AppCompatActivity() {
-    companion object {
-        const val EXTRA_ID_MOVIE = "EXTRA_ID_MOVIE"
-        const val EXTRA_TAG = "EXTRA_TAG"
-    }
-
     private lateinit var binding: ActivityDetailMovieBinding
     private val viewModel by viewModels<DetailMovieViewModel>()
 
@@ -124,5 +119,10 @@ class DetailMovieActivity : AppCompatActivity() {
             movieRateTV.text = movieTv.rate.toString()
             descriptionTV.text = movieTv.desc ?: getString(R.string.no_detail)
         }
+    }
+
+    companion object {
+        const val EXTRA_ID_MOVIE = "EXTRA_ID_MOVIE"
+        const val EXTRA_TAG = "EXTRA_TAG"
     }
 }

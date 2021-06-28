@@ -38,7 +38,7 @@
                     android:id="@+id/movieImageIV"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:contentDescription="@string/todo"
+                    android:contentDescription="@string/icon"
                     android:scaleType="centerCrop"
                     app:layout_constraintDimensionRatio="h,1.0:1.25"
                     app:layout_constraintEnd_toEndOf="parent"

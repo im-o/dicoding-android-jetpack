@@ -16,15 +16,8 @@ import rivaldy.dicoding.jetpack.mvvm.utils.UtilFunctions.loge
 
 @AndroidEntryPoint
 class MovieFragment : Fragment() {
-
-    companion object {
-        val TAG = MovieFragment::class.java.name ?: ""
-    }
-
     private lateinit var binding: FragmentMovieBinding
-
     private val viewModel by viewModels<MovieViewModel>()
-
     private val movieAdapter: MovieAdapter by lazy {
         MovieAdapter { item -> setDataMovie(item) }
     }
@@ -37,7 +30,6 @@ class MovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity ?: return
-        initData()
         initObserver()
     }
 
@@ -60,14 +52,14 @@ class MovieFragment : Fragment() {
         })
     }
 
-    private fun initData() {
-
-    }
-
     private fun setDataMovie(item: ResultMovie) {
         context?.openActivity(DetailMovieActivity::class.java) {
             putInt(DetailMovieActivity.EXTRA_ID_MOVIE, item.id ?: 0)
             putString(DetailMovieActivity.EXTRA_TAG, TAG)
         }
+    }
+
+    companion object {
+        val TAG = MovieFragment::class.java.name ?: ""
     }
 }

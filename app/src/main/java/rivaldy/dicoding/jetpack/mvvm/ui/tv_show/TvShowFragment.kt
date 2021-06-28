@@ -16,15 +16,8 @@ import rivaldy.dicoding.jetpack.mvvm.utils.UtilFunctions.loge
 
 @AndroidEntryPoint
 class TvShowFragment : Fragment() {
-
-    companion object {
-        val TAG = TvShowFragment::class.java.simpleName ?: ""
-    }
-
     private lateinit var binding: FragmentTvShowBinding
-
     private val viewModel by viewModels<TvShowViewModel>()
-
     private val tvShowAdapter: TvShowAdapter by lazy {
         TvShowAdapter { item -> setDataMovie(item) }
     }
@@ -37,11 +30,7 @@ class TvShowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity ?: return
-        initData()
         initObserver()
-    }
-
-    private fun initData() {
     }
 
     private fun initObserver() {
@@ -68,5 +57,9 @@ class TvShowFragment : Fragment() {
             putInt(DetailMovieActivity.EXTRA_ID_MOVIE, item.id ?: 0)
             putString(DetailMovieActivity.EXTRA_TAG, TAG)
         }
+    }
+
+    companion object {
+        val TAG = TvShowFragment::class.java.simpleName ?: ""
     }
 }

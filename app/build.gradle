@@ -38,7 +38,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
     buildFeatures {
@@ -54,6 +54,7 @@ dependencies {
     //kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:$coreVersion"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     //ui
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
