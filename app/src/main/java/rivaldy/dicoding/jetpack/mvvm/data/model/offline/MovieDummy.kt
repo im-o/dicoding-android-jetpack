@@ -10,6 +10,8 @@ import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.TvShowResponse
 import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.detail.GenreTv
 import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.detail.ProductionCountryTv
 import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.detail.TvShowDetailResponse
+import rivaldy.dicoding.jetpack.mvvm.data.model.db.MovieEntity
+import rivaldy.dicoding.jetpack.mvvm.data.model.db.TvShowEntity
 
 /**
  * Created by rivaldy on 28/05/21
@@ -17,6 +19,8 @@ import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.detail.TvShowDetailR
  **/
 
 object MovieDummy {
+
+    /** API **/
     fun getDummyMovie(): MovieResponse {
         val movies = mutableListOf<ResultMovie>()
         val movieResponse = MovieResponse(results = movies)
@@ -144,5 +148,39 @@ object MovieDummy {
             8.1,
             3984
         )
+    }
+
+    /** Local **/
+
+    fun getDummyMovieFav(): MutableList<MovieEntity> {
+        val movies = mutableListOf<MovieEntity>()
+        movies.add(
+            MovieEntity(
+                508943,
+                "Luca",
+                "2021-06-17",
+                8.2,
+                "/620hnMVLu6RSZW6a5rwO8gqpt0t.jpg",
+                "Luca and his best friend Alberto experience an unforgettable summer on the Italian Riviera. But all the fun is threatened by a deeply-held secret: they are sea monsters from another world just below the water’s surface.",
+                "2021-06-17 • US • Animation, Comedy, Family, Fantasy • 95 Minutes",
+            )
+        )
+        return movies
+    }
+
+    fun getDummyTvShowFav(): MutableList<TvShowEntity> {
+        val movies = mutableListOf<TvShowEntity>()
+        movies.add(
+            TvShowEntity(
+                84958,
+                "Loki",
+                "2021-06-09",
+                8.1,
+                "/wr7nrzDrpGCEgYnw15jyAB59PtZ.jpg",
+                "After stealing the Tesseract during the events of “Avengers: Endgame,” an alternate version of Loki is brought to the mysterious Time Variance Authority, a bureaucratic organization that exists outside of time and space and monitors the timeline. They give Loki a choice: face being erased from existence due to being a “time variant”or help fix the timeline and stop a greater threat.",
+                "2021-06-09 • US • Drama, Sci-Fi & Fantasy • 8 Minutes",
+            )
+        )
+        return movies
     }
 }

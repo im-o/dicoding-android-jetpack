@@ -112,9 +112,9 @@ class DataUseCase @Inject constructor(
         return LivePagedListBuilder(movieLocalRepositoryImpl.loadMovie(), config).build()
     }
 
-    suspend fun insertTvShow(movie: TvShowEntity) = tvShowLocalRepositoryImpl.insertTvShow(movie)
-    suspend fun deleteTvShow(movie: TvShowEntity) = tvShowLocalRepositoryImpl.deleteTvShow(movie)
-    fun getTvShowById(movieId: Int) = tvShowLocalRepositoryImpl.getTvShowById(movieId)
+    suspend fun insertTvShow(tvShow: TvShowEntity) = tvShowLocalRepositoryImpl.insertTvShow(tvShow)
+    suspend fun deleteTvShow(tvShow: TvShowEntity) = tvShowLocalRepositoryImpl.deleteTvShow(tvShow)
+    fun getTvShowById(tvShowId: Int) = tvShowLocalRepositoryImpl.getTvShowById(tvShowId)
     fun loadTvShow(): LiveData<PagedList<TvShowEntity>> {
         val config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)

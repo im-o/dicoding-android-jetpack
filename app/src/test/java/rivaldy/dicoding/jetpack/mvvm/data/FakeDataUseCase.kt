@@ -2,11 +2,17 @@ package rivaldy.dicoding.jetpack.mvvm.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import rivaldy.dicoding.jetpack.mvvm.data.model.api.movie.MovieResponse
 import rivaldy.dicoding.jetpack.mvvm.data.model.api.movie.detail.MovieDetailResponse
 import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.TvShowResponse
 import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.detail.TvShowDetailResponse
+import rivaldy.dicoding.jetpack.mvvm.data.model.db.MovieEntity
+import rivaldy.dicoding.jetpack.mvvm.data.model.db.TvShowEntity
+import rivaldy.dicoding.jetpack.mvvm.data.repository.impl.MovieLocalRepositoryImpl
 import rivaldy.dicoding.jetpack.mvvm.data.repository.impl.MovieRepositoryImpl
+import rivaldy.dicoding.jetpack.mvvm.data.repository.impl.TvShowLocalRepositoryImpl
 import rivaldy.dicoding.jetpack.mvvm.data.repository.impl.TvShowRepositoryImpl
 
 /**
@@ -15,7 +21,9 @@ import rivaldy.dicoding.jetpack.mvvm.data.repository.impl.TvShowRepositoryImpl
  **/
 class FakeDataUseCase(
     private val movieRepositoryImpl: MovieRepositoryImpl,
-    private val tvShowRepositoryImpl: TvShowRepositoryImpl
+    private val tvShowRepositoryImpl: TvShowRepositoryImpl,
+    private val movieLocalRepositoryImpl: MovieLocalRepositoryImpl,
+    private val tvShowLocalRepositoryImpl: TvShowLocalRepositoryImpl
 ) {
     val failureMessage = MutableLiveData<Throwable>()
     val onIsLoadData = MutableLiveData<Boolean>()
@@ -86,5 +94,23 @@ class FakeDataUseCase(
             }
         })
         return tvShowDetailLiveData
+    }
+
+    fun loadMovie(): LiveData<PagedList<MovieEntity>> {
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(4)
+            .setPageSize(4)
+            .build()
+        return LivePagedListBuilder(movieLocalRepositoryImpl.loadMovie(), config).build()
+    }
+
+    fun loadTvShow(): LiveData<PagedList<TvShowEntity>> {
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(4)
+            .setPageSize(4)
+            .build()
+        return LivePagedListBuilder(tvShowLocalRepositoryImpl.loadTvShow(), config).build()
     }
 }

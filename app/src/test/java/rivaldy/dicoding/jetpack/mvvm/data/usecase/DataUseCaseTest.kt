@@ -1,6 +1,7 @@
 package rivaldy.dicoding.jetpack.mvvm.data.usecase
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.paging.DataSource
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.verify
@@ -8,13 +9,22 @@ import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNotNull
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.Mockito
 import org.mockito.Mockito.doAnswer
 import org.mockito.Mockito.mock
 import rivaldy.dicoding.jetpack.mvvm.data.FakeDataUseCase
+import rivaldy.dicoding.jetpack.mvvm.data.model.db.MovieEntity
+import rivaldy.dicoding.jetpack.mvvm.data.model.db.TvShowEntity
 import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieDummy
+import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieDummy.getDummyMovieFav
+import rivaldy.dicoding.jetpack.mvvm.data.model.offline.MovieDummy.getDummyTvShowFav
+import rivaldy.dicoding.jetpack.mvvm.data.repository.impl.MovieLocalRepositoryImpl
 import rivaldy.dicoding.jetpack.mvvm.data.repository.impl.MovieRepositoryImpl
+import rivaldy.dicoding.jetpack.mvvm.data.repository.impl.TvShowLocalRepositoryImpl
 import rivaldy.dicoding.jetpack.mvvm.data.repository.impl.TvShowRepositoryImpl
+import rivaldy.dicoding.jetpack.mvvm.utils.Resource
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilLiveDataTest
+import rivaldy.dicoding.jetpack.mvvm.utils.UtilPagedList
 
 /**
  * Created by rivaldy on 26/06/21
@@ -27,7 +37,9 @@ class DataUseCaseTest {
 
     private val movieRepository = mock(MovieRepositoryImpl::class.java)
     private val tvShowRepository = mock(TvShowRepositoryImpl::class.java)
-    private val useCase = FakeDataUseCase(movieRepository, tvShowRepository)
+    private val movieLocalRepository = mock(MovieLocalRepositoryImpl::class.java)
+    private val tvShowLocalRepository = mock(TvShowLocalRepositoryImpl::class.java)
+    private val useCase = FakeDataUseCase(movieRepository, tvShowRepository, movieLocalRepository, tvShowLocalRepository)
 
     private val movieDummy = MovieDummy.getDummyMovie()
     private val movieIdDummy = movieDummy.results?.get(0)?.id ?: 0
@@ -87,5 +99,27 @@ class DataUseCaseTest {
         verify(tvShowRepository).getTvShowDetail(eq(tvShowIdDummy), any())
         assertNotNull(tvShowDetailLiveData)
         assertEquals(tvShowDetailDummy.id, tvShowDetailLiveData.id)
+    }
+
+    @Test
+    fun getMoviesFav() {
+        val dataSourceFactory = mock(DataSource.Factory::class.java) as DataSource.Factory<Int, MovieEntity>
+        Mockito.`when`(movieLocalRepository.loadMovie()).thenReturn(dataSourceFactory)
+        useCase.loadMovie()
+        val movieEntities = Resource.success(UtilPagedList.mockPagedList(getDummyMovieFav()))
+        verify(movieLocalRepository).loadMovie()
+        assertNotNull(movieEntities)
+        assertEquals(movieDummy.results?.size, movieEntities.data?.size)
+    }
+
+    @Test
+    fun getTvShowsFav() {
+        val dataSourceFactory = mock(DataSource.Factory::class.java) as DataSource.Factory<Int, TvShowEntity>
+        Mockito.`when`(tvShowLocalRepository.loadTvShow()).thenReturn(dataSourceFactory)
+        useCase.loadTvShow()
+        val movieEntities = Resource.success(UtilPagedList.mockPagedList(getDummyTvShowFav()))
+        verify(tvShowLocalRepository).loadTvShow()
+        assertNotNull(movieEntities)
+        assertEquals(tvShowDummy.results?.size, movieEntities.data?.size)
     }
 }
