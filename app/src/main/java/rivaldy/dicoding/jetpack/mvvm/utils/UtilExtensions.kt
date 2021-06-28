@@ -30,11 +30,4 @@ object UtilExtensions {
     fun View.showSnackBar(message: String) {
         Snackbar.make(this, message, Snackbar.LENGTH_SHORT).show()
     }
-
-//            public static void showSnackBarAction(View view, String message, String textButton, IActionDo iActionDo) {
-//        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
-//            .setTextColor(ContextCompat.getColor(view.getContext(), R.color.white))
-//            .setAction(textButton, view1 -> iActionDo.onAction())
-//        .show();
-//    }
 }

@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JetpackMVVM"
         tools:ignore="AllowBackup,UnusedAttribute">
-        <activity android:name=".ui.favorite.FavoriteActivity"></activity>
+        <activity android:name=".ui.favorite.FavoriteActivity" />
         <activity android:name=".ui.main.MainActivity" />
         <activity android:name=".ui.detail.DetailMovieActivity" />
         <activity android:name=".ui.main.SplashScreenActivity">

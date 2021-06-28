@@ -117,6 +117,7 @@ class MainActivityTest {
 
     @Test
     fun loadMoviesFav() {
+        onView(withId(R.id.movieListRV)).check(matches(isDisplayed()))
         onView(withId(R.id.movieListRV)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(SAMPLE_POSITION, click()))
         onView(withId(R.id.favoriteFAB)).perform(click())
         onView(isRoot()).perform(ViewActions.pressBack())
@@ -131,6 +132,7 @@ class MainActivityTest {
     @Test
     fun loadTvShowFav() {
         onView(withText(STR_TV_SHOW)).perform(click())
+        onView(withId(R.id.tvListRV)).check(matches(isDisplayed()))
         onView(withId(R.id.tvListRV)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(SAMPLE_POSITION, click()))
         onView(withId(R.id.favoriteFAB)).perform(click())
         onView(isRoot()).perform(ViewActions.pressBack())
