@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryLowTransparent"
-    tools:context=".ui.main.MainActivity">
+    tools:context=".ui.favorite.FavoriteActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -35,9 +35,7 @@
                     android:id="@+id/titleTV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/space_50"
-                    android:paddingEnd="@dimen/space_0"
-                    android:text="@string/app_title"
+                    android:text="@string/favorite_movie_db"
                     android:textAlignment="center"
                     android:textSize="@dimen/size_18"
                     android:textStyle="bold" />

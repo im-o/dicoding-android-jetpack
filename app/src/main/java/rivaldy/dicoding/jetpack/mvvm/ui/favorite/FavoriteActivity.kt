@@ -1,0 +1,31 @@
+package rivaldy.dicoding.jetpack.mvvm.ui.favorite
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
+import rivaldy.dicoding.jetpack.mvvm.R
+import rivaldy.dicoding.jetpack.mvvm.databinding.ActivityFavoriteBinding
+import rivaldy.dicoding.jetpack.mvvm.ui.favorite.movie.MovieFavFragment
+import rivaldy.dicoding.jetpack.mvvm.ui.favorite.tv_show.TvShowFavFragment
+import rivaldy.dicoding.jetpack.mvvm.ui.main.ViewPagerAdapter
+
+@AndroidEntryPoint
+class FavoriteActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityFavoriteBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityFavoriteBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        initView()
+    }
+
+    private fun initView() {
+        val titles = arrayListOf(getString(R.string.movies), getString(R.string.tv_show))
+        val fragments = arrayListOf(MovieFavFragment(), TvShowFavFragment())
+        val viewPagerAdapter = ViewPagerAdapter(titles, fragments, supportFragmentManager)
+
+        binding.viewPager.adapter = viewPagerAdapter
+        binding.tabLayout.setupWithViewPager(binding.viewPager)
+    }
+}

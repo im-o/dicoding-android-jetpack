@@ -13,4 +13,6 @@
     <dimen name="space_16">16dp</dimen>
     <dimen name="space_120">120dp</dimen>
     <dimen name="space_200">200dp</dimen>
+    <dimen name="space_60">60dp</dimen>
+    <dimen name="space_50">50dp</dimen>
 </resources>

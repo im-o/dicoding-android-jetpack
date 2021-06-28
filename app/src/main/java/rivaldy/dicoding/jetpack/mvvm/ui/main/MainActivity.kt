@@ -1,12 +1,16 @@
 package rivaldy.dicoding.jetpack.mvvm.ui.main
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import rivaldy.dicoding.jetpack.mvvm.R
 import rivaldy.dicoding.jetpack.mvvm.databinding.ActivityMainBinding
+import rivaldy.dicoding.jetpack.mvvm.ui.favorite.FavoriteActivity
 import rivaldy.dicoding.jetpack.mvvm.ui.movie.MovieFragment
 import rivaldy.dicoding.jetpack.mvvm.ui.tv_show.TvShowFragment
+import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.openActivity
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -17,7 +21,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        initPrepare()
         initView()
+    }
+
+    private fun initPrepare() {
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
     private fun initView() {
@@ -27,5 +37,20 @@ class MainActivity : AppCompatActivity() {
 
         binding.viewPager.adapter = viewPagerAdapter
         binding.tabLayout.setupWithViewPager(binding.viewPager)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_favorite, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.favoriteItem -> {
+                openActivity(FavoriteActivity::class.java)
+                return false
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
