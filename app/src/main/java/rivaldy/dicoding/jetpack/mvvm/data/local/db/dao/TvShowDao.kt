@@ -13,7 +13,7 @@ import rivaldy.dicoding.jetpack.mvvm.data.model.db.TvShowEntity
 @Dao
 interface TvShowDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTvShows(tvShow: TvShowEntity)
+    suspend fun insertTvShow(tvShow: TvShowEntity)
 
     @Query("SELECT * FROM tbl_tv_show")
     fun getTvShows(): DataSource.Factory<Int, TvShowEntity>

@@ -216,4 +216,27 @@
         android:layout_gravity="center_vertical|center_horizontal"
         android:layout_marginTop="@dimen/space_200"
         app:SpinKit_Color="@color/teal_700" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/favoriteFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/space_16"
+        android:backgroundTint="@color/teal_200"
+        android:contentDescription="@string/favorite_movie"
+        android:src="@drawable/ic_baseline_favorite_border_24"
+        app:tint="@color/colorHearth" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/unFavoriteFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/space_16"
+        android:backgroundTint="@color/teal_200"
+        android:contentDescription="@string/favorite_movie"
+        android:src="@drawable/ic_baseline_favorite_24"
+        android:visibility="gone"
+        app:tint="@color/colorHearth" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

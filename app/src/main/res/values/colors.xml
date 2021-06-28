@@ -20,4 +20,6 @@
     <color name="colorTextGreyLow">#737578</color>
     <color name="colorTextGreyVeryLow">#A3A6AA</color>
     <color name="colorDivider">#F5F2F2</color>
+
+    <color name="colorHearth">#F43274</color>
 </resources>

@@ -7,15 +7,21 @@ import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import rivaldy.dicoding.jetpack.mvvm.R
 import rivaldy.dicoding.jetpack.mvvm.data.model.api.movie.detail.MovieDetailResponse
 import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.detail.TvShowDetailResponse
+import rivaldy.dicoding.jetpack.mvvm.data.model.db.MovieEntity
+import rivaldy.dicoding.jetpack.mvvm.data.model.db.TvShowEntity
 import rivaldy.dicoding.jetpack.mvvm.data.model.offline.DetailMovieTv
 import rivaldy.dicoding.jetpack.mvvm.databinding.ActivityDetailMovieBinding
 import rivaldy.dicoding.jetpack.mvvm.ui.movie.MovieFragment
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilConst.BASE_IMAGE_URL
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.isVisible
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.myToast
+import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.showSnackBar
+import rivaldy.dicoding.jetpack.mvvm.utils.UtilFunctions.loge
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilFunctions.subStringComma
 
 @AndroidEntryPoint
@@ -37,6 +43,11 @@ class DetailMovieActivity : AppCompatActivity() {
         setContentView(binding.root)
         initPrepare()
         initObservers()
+        initClick()
+    }
+
+    private fun initClick() {
+        binding.favoriteFAB.setOnClickListener { }
     }
 
     private fun initPrepare() {
@@ -59,11 +70,21 @@ class DetailMovieActivity : AppCompatActivity() {
                         binding.layoutNSV.isVisible(it != null)
                         binding.noDataTV.isVisible(it == null)
                     })
+
+                    viewModel.getMovieById(extraIdMovie ?: 0).observe(this, {
+                        binding.favoriteFAB.isVisible(it == null)
+                        binding.unFavoriteFAB.isVisible(it != null)
+                    })
                 } else {
                     viewModel.getDetailTvShowById(extraIdMovie ?: 0).observe(this, {
                         prepareTvShow(it)
                         binding.layoutNSV.isVisible(it != null)
                         binding.noDataTV.isVisible(it == null)
+                    })
+
+                    viewModel.getTvShowById(extraIdMovie ?: 0).observe(this, {
+                        binding.favoriteFAB.isVisible(it == null)
+                        binding.unFavoriteFAB.isVisible(it != null)
                     })
                 }
             }
@@ -76,6 +97,10 @@ class DetailMovieActivity : AppCompatActivity() {
         viewModel.getIsLoadData().observe(this, {
             binding.loadingSKV.isVisible(it)
         })
+
+        viewModel.loadMovie().observe(this, {
+            for (i in it.indices) loge("This DATA DB : ${it[i]}")
+        })
     }
 
     private fun prepareMovie(movie: MovieDetailResponse?) {
@@ -87,6 +112,22 @@ class DetailMovieActivity : AppCompatActivity() {
         for (i in (movie.genres?.indices ?: return)) strGenres.add(movie.genres?.get(i)?.name.toString())
         val strInfo = getString(R.string.str_info, movie.releaseDate, strCompanies.subStringComma(), strGenres.subStringComma(), strRunTime)
         val detailMovieTv = DetailMovieTv(movie.title, strInfo, movie.voteAverage.toString(), movie.overview, strImgPath)
+
+        val movieEntity = MovieEntity(
+            movie.id ?: 0, movie.title.toString(), movie.releaseDate.toString(),
+            movie.voteAverage ?: 0.0, movie.backdropPath.toString(), movie.overview.toString(), strInfo
+        )
+
+        binding.favoriteFAB.setOnClickListener {
+            GlobalScope.launch { viewModel.insertMovie(movieEntity) }
+            binding.root.showSnackBar(getString(R.string.add_favorite))
+        }
+
+        binding.unFavoriteFAB.setOnClickListener {
+            GlobalScope.launch { viewModel.deleteMovie(movieEntity) }
+            binding.root.showSnackBar(getString(R.string.del_favorite))
+        }
+
         initView(detailMovieTv)
     }
 
@@ -99,6 +140,22 @@ class DetailMovieActivity : AppCompatActivity() {
         for (i in (tvShow.genres?.indices ?: return)) strGenres.add(tvShow.genres?.get(i)?.name.toString())
         val strInfo = getString(R.string.str_info, tvShow.firstAirDate, strCompanies.subStringComma(), strGenres.subStringComma(), strRunTime)
         val detailMovieTv = DetailMovieTv(tvShow.name, strInfo, tvShow.voteAverage.toString(), tvShow.overview, strImgPath)
+
+        val tvShowEntity = TvShowEntity(
+            tvShow.id ?: 0, tvShow.name.toString(), tvShow.firstAirDate.toString(),
+            tvShow.voteAverage ?: 0.0, tvShow.backdropPath.toString(), tvShow.overview.toString(), strInfo
+        )
+
+        binding.favoriteFAB.setOnClickListener {
+            GlobalScope.launch { viewModel.insertTvShow(tvShowEntity) }
+            binding.root.showSnackBar(getString(R.string.add_favorite))
+        }
+
+        binding.unFavoriteFAB.setOnClickListener {
+            GlobalScope.launch { viewModel.deleteTvShow(tvShowEntity) }
+            binding.root.showSnackBar(getString(R.string.del_favorite))
+        }
+
         initView(detailMovieTv)
     }
 

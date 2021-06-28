@@ -5,7 +5,7 @@ import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityRetainedComponent
+import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import rivaldy.dicoding.jetpack.mvvm.data.local.db.AppDatabase
 import rivaldy.dicoding.jetpack.mvvm.data.local.db.dao.MovieDao
@@ -18,8 +18,8 @@ import javax.inject.Singleton
  * Find me on my Github -> https://github.com/im-o
  **/
 
-@InstallIn(ActivityRetainedComponent::class)
 @Module
+@InstallIn(ApplicationComponent::class)
 object DatabaseModule {
 
     @Provides

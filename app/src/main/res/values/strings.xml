@@ -17,4 +17,6 @@
     <string name="icon">icon</string>
     <string name="favorite_movie_db">Favorite MovieDB</string>
     <string name="favorite_movie">Favorite Movie</string>
+    <string name="add_favorite">Adding data to favorite</string>
+    <string name="del_favorite">Remove data from favorite</string>
 </resources>

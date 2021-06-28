@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
 
 /**
  * Created by rivaldy on 28/05/21
@@ -25,4 +26,15 @@ object UtilExtensions {
     fun Context.myToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
+
+    fun View.showSnackBar(message: String) {
+        Snackbar.make(this, message, Snackbar.LENGTH_SHORT).show()
+    }
+
+//            public static void showSnackBarAction(View view, String message, String textButton, IActionDo iActionDo) {
+//        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+//            .setTextColor(ContextCompat.getColor(view.getContext(), R.color.white))
+//            .setAction(textButton, view1 -> iActionDo.onAction())
+//        .show();
+//    }
 }

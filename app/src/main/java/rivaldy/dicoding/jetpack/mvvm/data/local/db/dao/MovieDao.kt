@@ -13,7 +13,7 @@ import rivaldy.dicoding.jetpack.mvvm.data.model.db.MovieEntity
 @Dao
 interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMovies(movie: MovieEntity)
+    suspend fun insertMovie(movie: MovieEntity)
 
     @Query("SELECT * FROM tbl_movie")
     fun getMovies(): DataSource.Factory<Int, MovieEntity>
