@@ -23,12 +23,20 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
+            buildConfigField("String", "BASE_IMAGE_URL", "\"https://www.themoviedb.org/t/p/w220_and_h330_face\"")
+            buildConfigField("String", "API_KEY", "\"8b904530a7aced766995fa063ed27355\"")
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "BASE_URL", '"https://api.themoviedb.org/3/"')
-            buildConfigField("String", "BASE_TMDB_URL", '"https://api.themoviedb.org/3/"')
-            buildConfigField("String", "API_KEY", '"8b904530a7aced766995fa063ed27355"')
+            buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
+            buildConfigField("String", "BASE_IMAGE_URL", "\"https://www.themoviedb.org/t/p/w220_and_h330_face\"")
+            buildConfigField("String", "API_KEY", "\"8b904530a7aced766995fa063ed27355\"")
         }
     }
 
