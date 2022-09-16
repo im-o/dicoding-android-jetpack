@@ -34,22 +34,22 @@ class MovieFragment : Fragment() {
     }
 
     private fun initObserver() {
-        viewModel.getMovies().observe(viewLifecycleOwner, {
+        viewModel.getMovies().observe(viewLifecycleOwner) {
             binding.noDataTV.isVisible(it.results?.size ?: 0 <= 0)
             movieAdapter.setMovies(it.results)
             with(binding.movieListRV) {
                 setHasFixedSize(true)
                 adapter = movieAdapter
             }
-        })
+        }
 
-        viewModel.getFailureMessage().observe(viewLifecycleOwner, {
+        viewModel.getFailureMessage().observe(viewLifecycleOwner) {
             loge(it.message.toString())
-        })
+        }
 
-        viewModel.getIsLoadData().observe(viewLifecycleOwner, {
+        viewModel.getIsLoadData().observe(viewLifecycleOwner) {
             binding.loadingSKV.isVisible(it)
-        })
+        }
     }
 
     private fun setDataMovie(item: ResultMovie) {

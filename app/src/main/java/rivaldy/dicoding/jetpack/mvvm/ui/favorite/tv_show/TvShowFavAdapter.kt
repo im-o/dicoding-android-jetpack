@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
+import rivaldy.dicoding.jetpack.mvvm.BuildConfig
 import rivaldy.dicoding.jetpack.mvvm.R
 import rivaldy.dicoding.jetpack.mvvm.data.model.db.TvShowEntity
 import rivaldy.dicoding.jetpack.mvvm.databinding.RowItemMovieBinding
@@ -33,7 +34,7 @@ class TvShowFavAdapter(private val listener: (TvShowEntity) -> Unit) : PagedList
     class TvShowViewHolder(private val binding: RowItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bindItem(item: TvShowEntity, listener: (TvShowEntity) -> Unit) {
             with(binding) {
-                val urlImage = BASE_IMAGE_URL + item.backdropPath
+                val urlImage = BuildConfig.BASE_IMAGE_URL + item.backdropPath
                 movieTitleTV.text = item.name
                 movieDateTV.text = item.firstAirDate
                 movieRateTV.text = item.voteAverage.toString()

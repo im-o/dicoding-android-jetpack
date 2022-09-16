@@ -34,7 +34,7 @@ class TvShowFavFragment : Fragment() {
     }
 
     private fun initObserver() {
-        viewModel.loadTvShow().observe(viewLifecycleOwner, {
+        viewModel.loadTvShow().observe(viewLifecycleOwner) {
             binding.loadingSKV.isVisible(false)
             binding.noDataTV.isVisible(it.size <= 0)
             tvShowFavAdapter.submitList(it)
@@ -42,7 +42,7 @@ class TvShowFavFragment : Fragment() {
                 setHasFixedSize(true)
                 adapter = tvShowFavAdapter
             }
-        })
+        }
     }
 
     private fun setDataMovie(item: TvShowEntity) {

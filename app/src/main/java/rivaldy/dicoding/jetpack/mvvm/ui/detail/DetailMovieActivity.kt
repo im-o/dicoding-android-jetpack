@@ -9,6 +9,7 @@ import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import rivaldy.dicoding.jetpack.mvvm.BuildConfig
 import rivaldy.dicoding.jetpack.mvvm.R
 import rivaldy.dicoding.jetpack.mvvm.data.model.api.movie.detail.MovieDetailResponse
 import rivaldy.dicoding.jetpack.mvvm.data.model.api.tv_show.detail.TvShowDetailResponse
@@ -17,7 +18,6 @@ import rivaldy.dicoding.jetpack.mvvm.data.model.db.TvShowEntity
 import rivaldy.dicoding.jetpack.mvvm.data.model.offline.DetailMovieTv
 import rivaldy.dicoding.jetpack.mvvm.databinding.ActivityDetailMovieBinding
 import rivaldy.dicoding.jetpack.mvvm.ui.movie.MovieFragment
-import rivaldy.dicoding.jetpack.mvvm.utils.UtilConst.BASE_IMAGE_URL
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.isVisible
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.myToast
 import rivaldy.dicoding.jetpack.mvvm.utils.UtilExtensions.showSnackBar
@@ -64,45 +64,45 @@ class DetailMovieActivity : AppCompatActivity() {
         if (extraIdMovie != null) {
             if (extraTAG != null) {
                 if (extraTAG.equals(MovieFragment.TAG)) {
-                    viewModel.getDetailMovieById(extraIdMovie ?: 0).observe(this, {
+                    viewModel.getDetailMovieById(extraIdMovie ?: 0).observe(this) {
                         prepareMovie(it)
                         binding.layoutNSV.isVisible(it != null)
                         binding.noDataTV.isVisible(it == null)
-                    })
+                    }
 
-                    viewModel.getMovieById(extraIdMovie ?: 0).observe(this, {
+                    viewModel.getMovieById(extraIdMovie ?: 0).observe(this) {
                         binding.favoriteFAB.isVisible(it == null)
                         binding.unFavoriteFAB.isVisible(it != null)
-                    })
+                    }
                 } else {
-                    viewModel.getDetailTvShowById(extraIdMovie ?: 0).observe(this, {
+                    viewModel.getDetailTvShowById(extraIdMovie ?: 0).observe(this) {
                         prepareTvShow(it)
                         binding.layoutNSV.isVisible(it != null)
                         binding.noDataTV.isVisible(it == null)
-                    })
+                    }
 
-                    viewModel.getTvShowById(extraIdMovie ?: 0).observe(this, {
+                    viewModel.getTvShowById(extraIdMovie ?: 0).observe(this) {
                         binding.favoriteFAB.isVisible(it == null)
                         binding.unFavoriteFAB.isVisible(it != null)
-                    })
+                    }
                 }
             }
         }
 
-        viewModel.getFailureMessage().observe(this, {
+        viewModel.getFailureMessage().observe(this) {
             myToast(it.message.toString())
-        })
+        }
 
-        viewModel.getIsLoadData().observe(this, {
+        viewModel.getIsLoadData().observe(this) {
             binding.loadingSKV.isVisible(it)
-        })
+        }
     }
 
     private fun prepareMovie(movie: MovieDetailResponse?) {
         val strCompanies = arrayListOf<String>()
         val strGenres = arrayListOf<String>()
         val strRunTime = getString(R.string.str_minutes, movie?.runtime?.toString())
-        val strImgPath = BASE_IMAGE_URL + movie?.backdropPath
+        val strImgPath = BuildConfig.BASE_IMAGE_URL + movie?.backdropPath
         for (i in (movie?.productionCountries?.indices ?: return)) strCompanies.add(movie.productionCountries?.get(i)?.iso31661.toString())
         for (i in (movie.genres?.indices ?: return)) strGenres.add(movie.genres?.get(i)?.name.toString())
         val strInfo = getString(R.string.str_info, movie.releaseDate, strCompanies.subStringComma(), strGenres.subStringComma(), strRunTime)
@@ -130,7 +130,7 @@ class DetailMovieActivity : AppCompatActivity() {
         val strCompanies = arrayListOf<String>()
         val strGenres = arrayListOf<String>()
         val strRunTime = getString(R.string.str_episodes, tvShow?.numberOfEpisodes.toString())
-        val strImgPath = BASE_IMAGE_URL + tvShow?.backdropPath
+        val strImgPath = BuildConfig.BASE_IMAGE_URL + tvShow?.backdropPath
         for (i in (tvShow?.productionCountries?.indices ?: return)) strCompanies.add(tvShow.productionCountries?.get(i)?.iso31661.toString())
         for (i in (tvShow.genres?.indices ?: return)) strGenres.add(tvShow.genres?.get(i)?.name.toString())
         val strInfo = getString(R.string.str_info, tvShow.firstAirDate, strCompanies.subStringComma(), strGenres.subStringComma(), strRunTime)

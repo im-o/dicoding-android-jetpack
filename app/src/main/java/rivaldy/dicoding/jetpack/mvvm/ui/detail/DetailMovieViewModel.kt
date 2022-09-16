@@ -1,19 +1,21 @@
 package rivaldy.dicoding.jetpack.mvvm.ui.detail
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import rivaldy.dicoding.jetpack.mvvm.data.model.db.MovieEntity
 import rivaldy.dicoding.jetpack.mvvm.data.model.db.TvShowEntity
 import rivaldy.dicoding.jetpack.mvvm.usecase.DataUseCase
+import javax.inject.Inject
 
 /**
  * Created by rivaldy on 28/05/21
  * Find me on my Github -> https://github.com/im-o
  **/
 
-class DetailMovieViewModel @ViewModelInject constructor(
+@HiltViewModel
+class DetailMovieViewModel @Inject constructor(
     private val useCase: DataUseCase
 ) : ViewModel() {
 

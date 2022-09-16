@@ -3,7 +3,7 @@ package rivaldy.dicoding.jetpack.mvvm.di
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import rivaldy.dicoding.jetpack.mvvm.data.local.db.dao.MovieDao
 import rivaldy.dicoding.jetpack.mvvm.data.local.db.dao.TvShowDao
 import rivaldy.dicoding.jetpack.mvvm.data.remote.ApiService
@@ -18,7 +18,7 @@ import rivaldy.dicoding.jetpack.mvvm.data.repository.impl.TvShowRepositoryImpl
  **/
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object RepositoryModule {
 
     @Provides

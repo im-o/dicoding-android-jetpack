@@ -3,7 +3,7 @@ package rivaldy.dicoding.jetpack.mvvm.di
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import rivaldy.dicoding.jetpack.mvvm.data.repository.impl.MovieLocalRepositoryImpl
 import rivaldy.dicoding.jetpack.mvvm.data.repository.impl.MovieRepositoryImpl
 import rivaldy.dicoding.jetpack.mvvm.data.repository.impl.TvShowLocalRepositoryImpl
@@ -15,7 +15,7 @@ import rivaldy.dicoding.jetpack.mvvm.usecase.DataUseCase
  * Find me on my Github -> https://github.com/im-o
  **/
 
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 @Module
 object UseCaseModule {
 

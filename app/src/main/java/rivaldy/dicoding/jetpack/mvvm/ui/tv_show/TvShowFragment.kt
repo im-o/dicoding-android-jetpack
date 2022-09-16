@@ -34,22 +34,22 @@ class TvShowFragment : Fragment() {
     }
 
     private fun initObserver() {
-        viewModel.getTvShows().observe(viewLifecycleOwner, {
+        viewModel.getTvShows().observe(viewLifecycleOwner) {
             binding.noDataTV.isVisible(it.results?.size ?: 0 <= 0)
             tvShowAdapter.setTvShows(it.results)
             with(binding.tvListRV) {
                 setHasFixedSize(true)
                 adapter = tvShowAdapter
             }
-        })
+        }
 
-        viewModel.getFailureMessage().observe(viewLifecycleOwner, {
+        viewModel.getFailureMessage().observe(viewLifecycleOwner) {
             loge(it.message.toString())
-        })
+        }
 
-        viewModel.getIsLoadData().observe(viewLifecycleOwner, {
+        viewModel.getIsLoadData().observe(viewLifecycleOwner) {
             binding.loadingSKV.isVisible(it)
-        })
+        }
     }
 
     private fun setDataMovie(item: ResultTv) {

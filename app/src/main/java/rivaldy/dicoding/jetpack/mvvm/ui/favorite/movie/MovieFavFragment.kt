@@ -34,7 +34,7 @@ class MovieFavFragment : Fragment() {
     }
 
     private fun initObserver() {
-        viewModel.loadMovie().observe(viewLifecycleOwner, {
+        viewModel.loadMovie().observe(viewLifecycleOwner) {
             binding.loadingSKV.isVisible(false)
             binding.noDataTV.isVisible(it.size <= 0)
             movieAdapter.submitList(it)
@@ -42,7 +42,7 @@ class MovieFavFragment : Fragment() {
                 setHasFixedSize(true)
                 adapter = movieAdapter
             }
-        })
+        }
     }
 
     private fun setDataMovie(item: MovieEntity) {

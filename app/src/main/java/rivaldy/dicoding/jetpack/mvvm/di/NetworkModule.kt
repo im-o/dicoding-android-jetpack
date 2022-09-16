@@ -4,7 +4,7 @@ import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -20,14 +20,13 @@ import rivaldy.dicoding.jetpack.mvvm.utils.UtilConst.PATH_DEFAULT_LANG
  * Find me on my Github -> https://github.com/im-o
  **/
 
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 @Module
 object NetworkModule {
 
     @Provides
     fun provideBaseUrl(): String {
-        //return BuildConfig.BASE_URL
-        return "https://api.themoviedb.org/3/"
+        return BuildConfig.BASE_URL
     }
 
     @Provides
@@ -44,7 +43,7 @@ object NetworkModule {
                     .request()
                     .url
                     .newBuilder()
-                    .addQueryParameter(PATH_API_KEY, UtilConst.API_KEY)
+                    .addQueryParameter(PATH_API_KEY, BuildConfig.API_KEY)
                     .addQueryParameter(PATH_DEFAULT_LANG, UtilConst.DEFAULT_LANG)
                     .build()
                 chain.proceed(chain.request().newBuilder().url(url).build())
